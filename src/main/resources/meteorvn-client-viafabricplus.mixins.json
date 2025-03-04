@@ -1,0 +1,12 @@
+{
+  "required": false,
+  "package": "meteordevelopment.meteorvnclient.mixin.viafabricplus",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "meteordevelopment.meteorvnclient.MixinPlugin",
+  "client": [
+    "GeneralSettingsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

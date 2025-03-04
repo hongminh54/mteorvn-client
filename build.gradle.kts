@@ -104,7 +104,7 @@ dependencies {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/meteor-client.accesswidener")
+    accessWidenerPath = file("src/main/resources/meteorvn-client.accesswidener")
 }
 
 afterEvaluate {
@@ -139,7 +139,7 @@ tasks {
         }
 
         manifest {
-            attributes["Main-Class"] = "meteordevelopment.meteorclient.Main"
+            attributes["Main-Class"] = "meteordevelopment.meteorvnclient.Main"
         }
     }
 
@@ -196,7 +196,7 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
-            artifactId = "meteor-client"
+            artifactId = "meteorvn-client"
 
             version = properties["minecraft_version"] as String + "-SNAPSHOT"
         }

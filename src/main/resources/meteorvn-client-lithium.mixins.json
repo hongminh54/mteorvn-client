@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "package": "meteordevelopment.meteorvnclient.mixin.lithium",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "meteordevelopment.meteorvnclient.MixinPlugin",
+  "client": [
+    "ChunkAwareBlockCollisionSweeperMixin",
+    "LithiumEntityCollisionsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
