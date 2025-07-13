@@ -18,6 +18,7 @@ import net.minecraft.util.Pair;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -39,6 +40,7 @@ public class ChatUtils {
             .setStyle(Style.EMPTY.withFormatting(Formatting.GRAY))
             .append("[")
             .append(Text.literal("Meteor").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(MeteorVNClient.ADDON.color.getPacked()))))
+            .append(Text.literal("VN").setStyle(Style.EMPTY.withColor(Formatting.GOLD)))
             .append("] ");
     }
 
@@ -207,6 +209,10 @@ public class ChatUtils {
     }
 
     private static MutableText formatMsg(String message, Formatting defaultColor) {
+        // Đảm bảo message là UTF-8
+        if (message == null) return Text.empty();
+        message = new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+
         StringReader reader = new StringReader(message);
         MutableText text = Text.empty();
         Style style = Style.EMPTY.withFormatting(defaultColor);
@@ -246,7 +252,11 @@ public class ChatUtils {
             }
         }
 
-        if (!result.isEmpty()) text.append(Text.literal(result.toString()).setStyle(style));
+        if (!result.isEmpty()) {
+            // Đảm bảo chuỗi cuối cùng là UTF-8
+            String finalResult = new String(result.toString().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+            text.append(Text.literal(finalResult).setStyle(style));
+        }
 
         return text;
     }
@@ -259,7 +269,7 @@ public class ChatUtils {
             Style style = coordsText.getStyle().withFormatting(Formatting.BOLD)
                 .withHoverEvent(new HoverEvent(
                     HoverEvent.Action.SHOW_TEXT,
-                    Text.literal("Set as Baritone goal")
+                    Text.literal("Đặt làm mục tiêu cho Baritone")
                 ))
                 .withClickEvent(new MeteorClickEvent(
                     ClickEvent.Action.RUN_COMMAND,

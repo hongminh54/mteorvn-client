@@ -88,6 +88,7 @@ public class WMeteorModule extends WPressable implements MeteorWidget {
             x += w - titleWidth;
         }
 
-        renderer.text(module.title, x, y + pad, theme.textColor.get(), false);
+        String title = new String(module.title.getBytes(java.nio.charset.StandardCharsets.UTF_8), java.nio.charset.StandardCharsets.UTF_8);
+        renderer.text(title, x, y + pad, theme.textColor.get(), false);
     }
 }

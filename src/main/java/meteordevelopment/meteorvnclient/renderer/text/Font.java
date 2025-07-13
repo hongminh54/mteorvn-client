@@ -38,8 +38,10 @@ public class Font {
             STBTTPackedchar.create(95), // Basic Latin
             STBTTPackedchar.create(96), // Latin 1 Supplement
             STBTTPackedchar.create(128), // Latin Extended-A
+            STBTTPackedchar.create(96), // Latin Extended-B (Tiếng Việt một phần)
             STBTTPackedchar.create(144), // Greek and Coptic
             STBTTPackedchar.create(256), // Cyrillic
+            STBTTPackedchar.create(96), // Latin Extended Additional (Tiếng Việt phần còn lại)
             STBTTPackedchar.create(1) // infinity symbol
         };
 
@@ -52,9 +54,13 @@ public class Font {
         packRange.put(STBTTPackRange.create().set(height, 32, null, 95, cdata[0], (byte) 2, (byte) 2));
         packRange.put(STBTTPackRange.create().set(height, 160, null, 96, cdata[1], (byte) 2, (byte) 2));
         packRange.put(STBTTPackRange.create().set(height, 256, null, 128, cdata[2], (byte) 2, (byte) 2));
-        packRange.put(STBTTPackRange.create().set(height, 880, null, 144, cdata[3], (byte) 2, (byte) 2));
-        packRange.put(STBTTPackRange.create().set(height, 1024, null, 256, cdata[4], (byte) 2, (byte) 2));
-        packRange.put(STBTTPackRange.create().set(height, 8734, null, 1, cdata[5], (byte) 2, (byte) 2)); // lol
+        // Thêm Latin Extended-B (chứa một số ký tự tiếng Việt)
+        packRange.put(STBTTPackRange.create().set(height, 0x0180, null, 96, cdata[3], (byte) 2, (byte) 2));
+        packRange.put(STBTTPackRange.create().set(height, 880, null, 144, cdata[4], (byte) 2, (byte) 2));
+        packRange.put(STBTTPackRange.create().set(height, 1024, null, 256, cdata[5], (byte) 2, (byte) 2));
+        // Thêm Latin Extended Additional (chứa phần lớn ký tự tiếng Việt có dấu)
+        packRange.put(STBTTPackRange.create().set(height, 0x1EA0, null, 96, cdata[6], (byte) 2, (byte) 2));
+        packRange.put(STBTTPackRange.create().set(height, 8734, null, 1, cdata[7], (byte) 2, (byte) 2)); // lol
         packRange.flip();
 
         // write and finish

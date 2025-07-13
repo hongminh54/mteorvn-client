@@ -60,11 +60,11 @@ public class NbtUtils {
             mc.keyboard.setClipboard(Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray()));
             return true;
         } catch (Exception e) {
-            MeteorVNClient.LOG.error("Error copying {} NBT to clipboard!", name);
+            MeteorVNClient.LOG.error("Lỗi sao chép {} NBT vào clipboard!", name);
 
             OkPrompt.create()
-                .title(String.format("Error copying %s NBT to clipboard!", name))
-                .message("This shouldn't happen, please report it.")
+                .title(String.format("Lỗi sao chép %s NBT vào clipboard!!", name))
+                .message("Điều này không nên xảy ra, vui lòng báo cáo lỗi!.")
                 .id("nbt-copying")
                 .show();
 

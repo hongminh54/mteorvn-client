@@ -74,7 +74,7 @@ public class Modules extends System<Modules> {
     private boolean awaitingKeyRelease = false;
 
     public Modules() {
-        super("modules");
+        super("mo-dun");
     }
 
     public static Modules get() {
@@ -259,11 +259,11 @@ public class Modules extends System<Modules> {
 
         if (moduleToBind.keybind.canBindTo(isKey, value, modifiers)) {
             moduleToBind.keybind.set(isKey, value, modifiers);
-            moduleToBind.info("Bound to (highlight)%s(default).", moduleToBind.keybind);
+            moduleToBind.info("Đã liên kết với (highlight)%s(default).", moduleToBind.keybind);
         }
         else if (value == GLFW.GLFW_KEY_ESCAPE) {
             moduleToBind.keybind.set(Keybind.none());
-            moduleToBind.info("Removed bind.");
+            moduleToBind.info("Đã xóa phím liên kết.");
         }
         else return false;
 

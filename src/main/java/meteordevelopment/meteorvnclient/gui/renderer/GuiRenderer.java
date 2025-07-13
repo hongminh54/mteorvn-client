@@ -221,6 +221,10 @@ public class GuiRenderer {
     }
 
     public void text(String text, double x, double y, Color color, boolean title) {
+        // Đảm bảo text là UTF-8
+        if (text != null) {
+            text = new String(text.getBytes(java.nio.charset.StandardCharsets.UTF_8), java.nio.charset.StandardCharsets.UTF_8);
+        }
         texts.add(getOp(textPool, x, y, color).set(text, theme.textRenderer(), title));
     }
 

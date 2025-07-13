@@ -6,6 +6,7 @@
 package meteordevelopment.meteorvnclient.systems.modules.misc;
 
 //Created by squidoodly
+//Recode by hongminh54
 
 import meteordevelopment.discordipc.DiscordIPC;
 import meteordevelopment.discordipc.RichPresence;
@@ -25,6 +26,7 @@ import meteordevelopment.meteorvnclient.utils.misc.MeteorStarscript;
 import meteordevelopment.orbit.EventHandler;
 import meteordevelopment.starscript.Script;
 import net.minecraft.client.gui.screen.*;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.multiplayer.AddServerScreen;
 import net.minecraft.client.gui.screen.multiplayer.ConnectScreen;
 import net.minecraft.client.gui.screen.multiplayer.DirectConnectScreen;
@@ -36,8 +38,12 @@ import net.minecraft.client.realms.gui.screen.RealmsScreen;
 import net.minecraft.util.Pair;
 import net.minecraft.util.Util;
 
+import javax.swing.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import static meteordevelopment.meteorvnclient.MeteorVNClient.IN_DEVELOPMENT;
 
 public class DiscordPresence extends Module {
     public enum SelectMode {
@@ -51,8 +57,8 @@ public class DiscordPresence extends Module {
     // Line 1
 
     private final Setting<List<String>> line1Strings = sgLine1.add(new StringListSetting.Builder()
-        .name("line-1-messages")
-        .description("Messages used for the first line.")
+        .name("tin-nhan-dong-1")
+        .description("Cac tin nhan duoc su dung cho dong thu nhat.")
         .defaultValue("{player}", "{server}")
         .onChanged(strings -> recompileLine1())
         .renderer(StarscriptTextBoxRenderer.class)
@@ -60,8 +66,8 @@ public class DiscordPresence extends Module {
     );
 
     private final Setting<Integer> line1UpdateDelay = sgLine1.add(new IntSetting.Builder()
-        .name("line-1-update-delay")
-        .description("How fast to update the first line in ticks.")
+        .name("toc-do-cap-nhap-dong-1")
+        .description("Toc do cap nhap dong tin nhan tinh bang tick.")
         .defaultValue(200)
         .min(10)
         .sliderRange(10, 200)
@@ -69,8 +75,8 @@ public class DiscordPresence extends Module {
     );
 
     private final Setting<SelectMode> line1SelectMode = sgLine1.add(new EnumSetting.Builder<SelectMode>()
-        .name("line-1-select-mode")
-        .description("How to select messages for the first line.")
+        .name("che-do-chon-dong-1")
+        .description("Cach chon tin nhan cho dong thu nhat.")
         .defaultValue(SelectMode.Sequential)
         .build()
     );
@@ -78,17 +84,17 @@ public class DiscordPresence extends Module {
     // Line 2
 
     private final Setting<List<String>> line2Strings = sgLine2.add(new StringListSetting.Builder()
-        .name("line-2-messages")
-        .description("Messages used for the second line.")
-        .defaultValue("Meteor on Crack!", "{round(server.tps, 1)} TPS", "Playing on {server.difficulty} difficulty.", "{server.player_count} Players online")
+        .name("Tin-nhan-dong-2")
+        .description("Tin nhan duoc su dung cho dong 2.")
+        .defaultValue("MeteorVN cây nhà lá vườn!", "Được Build Bởi TYBZI (hongminh54)")
         .onChanged(strings -> recompileLine2())
         .renderer(StarscriptTextBoxRenderer.class)
         .build()
     );
 
     private final Setting<Integer> line2UpdateDelay = sgLine2.add(new IntSetting.Builder()
-        .name("line-2-update-delay")
-        .description("How fast to update the second line in ticks.")
+        .name("do-tre-cap-nhat-dong-2")
+        .description("Toc do cap nhap tin nhan dong 2 tinh bang tick.")
         .defaultValue(60)
         .min(10)
         .sliderRange(10, 200)
@@ -96,8 +102,8 @@ public class DiscordPresence extends Module {
     );
 
     private final Setting<SelectMode> line2SelectMode = sgLine2.add(new EnumSetting.Builder<SelectMode>()
-        .name("line-2-select-mode")
-        .description("How to select messages for the second line.")
+        .name("Che-do-chon-dong-2")
+        .description("Cach chon tin nhan cho dong 2.")
         .defaultValue(SelectMode.Sequential)
         .build()
     );
@@ -116,12 +122,12 @@ public class DiscordPresence extends Module {
     public static final List<Pair<String, String>> customStates = new ArrayList<>();
 
     static {
-        registerCustomState("com.terraformersmc.modmenu.gui", "Browsing mods");
-        registerCustomState("me.jellysquid.mods.sodium.client", "Changing options");
+        registerCustomState("com.terraformersmc.modmenu.gui", "Duyệt mod");
+        registerCustomState("me.jellysquid.mods.sodium.client", "Thay đổi tùy chọn");
     }
 
     public DiscordPresence() {
-        super(Categories.Misc, "discord-presence", "Displays Meteor as your presence on Discord.");
+        super(Categories.Misc, "discord-presence", "Hien thi trang thai cua ban tren Discord.");
 
         runInMainMenu = true;
     }
@@ -145,15 +151,15 @@ public class DiscordPresence extends Module {
 
     @Override
     public void onActivate() {
-        DiscordIPC.start(835240968533049424L, null);
+        DiscordIPC.start(1256887737512890458L, null);
 
         rpc.setStart(System.currentTimeMillis() / 1000L);
 
-        String largeText = "%s %s".formatted(MeteorVNClient.NAME, MeteorVNClient.VERSION);
-        if (!MeteorVNClient.BUILD_NUMBER.isEmpty()) largeText += " Build: " + MeteorVNClient.BUILD_NUMBER;
+        String largeText = "%s %s".formatted("MeteorVN Client", MeteorVNClient.VERSION);
+        if (!MeteorVNClient.BUILD_NUMBER.isEmpty()) largeText += " DevBuild: " + MeteorVNClient.BUILD_NUMBER;
         rpc.setLargeImage("meteorvn_client", largeText);
 
-        currentSmallImage = SmallImage.Snail;
+        currentSmallImage = SmallImage.hongminh54;
 
         recompileLine1();
         recompileLine2();
@@ -196,14 +202,13 @@ public class DiscordPresence extends Module {
         boolean update = false;
 
         // Image
-        if (ticks >= 200 || forceUpdate) {
+        if (ticks >= 20 || forceUpdate) {
             currentSmallImage = currentSmallImage.next();
             currentSmallImage.apply();
             update = true;
 
             ticks = 0;
-        }
-        else ticks++;
+        } else ticks++;
 
         if (Utils.canUpdate()) {
             // Line 1
@@ -216,69 +221,78 @@ public class DiscordPresence extends Module {
                     }
 
                     String message = MeteorStarscript.run(line1Scripts.get(i));
-                    if (message != null) rpc.setDetails(message);
-                }
-                update = true;
-
-                line1Ticks = 0;
-            } else line1Ticks++;
-
-            // Line 2
-            if (line2Ticks >= line2UpdateDelay.get() || forceUpdate) {
-                if (!line2Scripts.isEmpty()) {
-                    int i = Utils.random(0, line2Scripts.size());
-                    if (line2SelectMode.get() == SelectMode.Sequential) {
-                        if (line2I >= line2Scripts.size()) line2I = 0;
-                        i = line2I++;
+                    if (message != null) {
+                        message = new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+                        rpc.setDetails(message);
                     }
+                    update = true;
 
-                    String message = MeteorStarscript.run(line2Scripts.get(i));
-                    if (message != null) rpc.setState(message);
-                }
-                update = true;
+                    line1Ticks = 0;
+                } else line1Ticks++;
 
-                line2Ticks = 0;
-            } else line2Ticks++;
-        }
-        else {
-            if (!lastWasInMainMenu) {
-                rpc.setDetails(MeteorVNClient.NAME + " " + (MeteorVNClient.BUILD_NUMBER.isEmpty() ? MeteorVNClient.VERSION : MeteorVNClient.VERSION + " " + MeteorVNClient.BUILD_NUMBER));
+                // Line 2
+                if (line2Ticks >= line2UpdateDelay.get() || forceUpdate) {
+                    if (!line2Scripts.isEmpty()) {
+                        int i = Utils.random(0, line2Scripts.size());
+                        if (line2SelectMode.get() == SelectMode.Sequential) {
+                            if (line2I >= line2Scripts.size()) line2I = 0;
+                            i = line2I++;
+                        }
 
-                if (mc.currentScreen instanceof TitleScreen) rpc.setState("Looking at title screen");
-                else if (mc.currentScreen instanceof SelectWorldScreen) rpc.setState("Selecting world");
-                else if (mc.currentScreen instanceof CreateWorldScreen || mc.currentScreen instanceof EditGameRulesScreen) rpc.setState("Creating world");
-                else if (mc.currentScreen instanceof EditWorldScreen) rpc.setState("Editing world");
-                else if (mc.currentScreen instanceof LevelLoadingScreen) rpc.setState("Loading world");
-                else if (mc.currentScreen instanceof MultiplayerScreen) rpc.setState("Selecting server");
-                else if (mc.currentScreen instanceof AddServerScreen) rpc.setState("Adding server");
-                else if (mc.currentScreen instanceof ConnectScreen || mc.currentScreen instanceof DirectConnectScreen) rpc.setState("Connecting to server");
-                else if (mc.currentScreen instanceof WidgetScreen) rpc.setState("Browsing Meteor's GUI");
-                else if (mc.currentScreen instanceof OptionsScreen || mc.currentScreen instanceof SkinOptionsScreen || mc.currentScreen instanceof SoundOptionsScreen || mc.currentScreen instanceof VideoOptionsScreen || mc.currentScreen instanceof ControlsOptionsScreen || mc.currentScreen instanceof LanguageOptionsScreen || mc.currentScreen instanceof ChatOptionsScreen || mc.currentScreen instanceof PackScreen || mc.currentScreen instanceof AccessibilityOptionsScreen) rpc.setState("Changing options");
-                else if (mc.currentScreen instanceof CreditsScreen) rpc.setState("Reading credits");
-                else if (mc.currentScreen instanceof RealmsScreen) rpc.setState("Browsing Realms");
-                else {
-                    boolean setState = false;
-                    if (mc.currentScreen != null) {
-                        String className = mc.currentScreen.getClass().getName();
-                        for (var pair : customStates) {
-                            if (className.startsWith(pair.getLeft())) {
-                                rpc.setState(pair.getRight());
-                                setState = true;
-                                break;
-                            }
+                        String message = MeteorStarscript.run(line2Scripts.get(i));
+                        if (message != null) {
+                            message = new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+                            rpc.setState(message);
                         }
                     }
-                    if (!setState) rpc.setState("In main menu");
+                    update = true;
+
+                    line2Ticks = 0;
+                } else line2Ticks++;
+            } else {
+                if (!lastWasInMainMenu) {
+                    rpc.setDetails("Đang chơi " + MeteorVNClient.NAME + " " + MeteorVNClient.VERSION + (IN_DEVELOPMENT ? " DevBuild: " + MeteorVNClient.DEV_BUILD : ""));
+
+                    if (mc.currentScreen instanceof TitleScreen) rpc.setState("Đang nghe nhạc Ngọt");
+                    else if (mc.currentScreen instanceof SelectWorldScreen) rpc.setState("Đang chọn thế giới");
+                    else if (mc.currentScreen instanceof CreateWorldScreen || mc.currentScreen instanceof EditGameRulesScreen) rpc.setState("Đang tạo thế giới");
+                    else if (mc.currentScreen instanceof EditWorldScreen) rpc.setState("Đang chỉnh sửa thế giới");
+                    else if (mc.currentScreen instanceof LevelLoadingScreen) rpc.setState("Đang tải thế giới");
+                    else if (mc.currentScreen instanceof MultiplayerScreen) rpc.setState("Đang chọn máy chủ");
+                    else if (mc.currentScreen instanceof AddServerScreen) rpc.setState("Đang thêm máy chủ");
+                    else if (mc.currentScreen instanceof ConnectScreen || mc.currentScreen instanceof DirectConnectScreen) rpc.setState("Đang kết nối máy chủ");
+                    else if (mc.currentScreen instanceof WidgetScreen) rpc.setState("Đang mở GUI mô-đun MeteorVN");
+                    else if (mc.currentScreen instanceof OptionsScreen || mc.currentScreen instanceof SkinOptionsScreen || mc.currentScreen instanceof SoundOptionsScreen || mc.currentScreen instanceof VideoOptionsScreen || mc.currentScreen instanceof ControlsOptionsScreen || mc.currentScreen instanceof LanguageOptionsScreen || mc.currentScreen instanceof ChatOptionsScreen || mc.currentScreen instanceof PackScreen || mc.currentScreen instanceof AccessibilityOptionsScreen) rpc.setState("Đang thay đổi cài đặt");
+                    else if (mc.currentScreen instanceof CreditsScreen) rpc.setState("Đang đọc credit");
+                    else if (mc.currentScreen instanceof RealmsScreen) rpc.setState("Đang tìm kiếm Realms");
+                    else if (mc.currentScreen instanceof ChatScreen) rpc.setState("Đang trò chuyện");
+                    else if (mc.currentScreen instanceof InventoryScreen) rpc.setState("Đang mở túi đồ");
+                    else {
+                        boolean setState = false;
+                        if (mc.currentScreen != null) {
+                            String className = mc.currentScreen.getClass().getName();
+                            for (var pair : customStates) {
+                                if (className.startsWith(pair.getLeft())) {
+                                    String state = pair.getRight();
+                                    state = new String(state.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+                                    rpc.setState(state);
+                                    setState = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!setState) rpc.setState("Đang quay tay giữa màn đêm");
+                    }
+
+                    update = true;
                 }
-
-                update = true;
             }
-        }
 
-        // Update
-        if (update) DiscordIPC.setActivity(rpc);
-        forceUpdate = false;
-        lastWasInMainMenu = !Utils.canUpdate();
+            // Update
+            if (update) DiscordIPC.setActivity(rpc);
+            forceUpdate = false;
+            lastWasInMainMenu = !Utils.canUpdate();
+        }
     }
 
     @EventHandler
@@ -288,15 +302,15 @@ public class DiscordPresence extends Module {
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
-        WButton help = theme.button("Open documentation.");
+        WButton help = theme.button("Xem huong dan..");
         help.action = () -> Util.getOperatingSystem().open("https://github.com/MeteorDevelopment/meteor-client/wiki/Starscript");
 
         return help;
     }
 
     private enum SmallImage {
-        MineGame("minegame", "MineGame159"),
-        Snail("seasnail", "seasnail8169");
+        hongminh54("hongminh54", "hongminh54"),
+        sourcecode54("sourcecode54", "sourcecode54");
 
         private final String key, text;
 
@@ -310,8 +324,8 @@ public class DiscordPresence extends Module {
         }
 
         SmallImage next() {
-            if (this == MineGame) return Snail;
-            return MineGame;
+            if (this == hongminh54) return sourcecode54;
+            return hongminh54;
         }
     }
 }

@@ -146,8 +146,8 @@ public class PacketUtilsUtil {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write("/*\n");
-            writer.write(" * This file is part of the Meteor Client distribution (https://github.com/MeteorDevelopment/meteor-client/).\n");
-            writer.write(" * Copyright (c) Meteor Development.\n");
+            writer.write(" * Tệp này là một phần của bản phân phối MeteorVN Client (https://github.com/hongminh54/mteorvn-client).\n");
+            writer.write(" * Bản quyền thuộc bởi (c) MeteorVN Development.\n");
             writer.write(" */\n\n");
 
             writer.write("package meteordevelopment.meteorvnclient.utils.network;\n\n");

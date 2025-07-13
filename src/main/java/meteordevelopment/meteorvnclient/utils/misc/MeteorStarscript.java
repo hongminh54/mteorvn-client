@@ -57,6 +57,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.apache.commons.lang3.StringUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -204,6 +205,10 @@ public class MeteorStarscript {
     // Helpers
 
     public static Script compile(String source) {
+        // Đảm bảo source là UTF-8
+        if (source == null) return null;
+        source = new String(source.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+
         Parser.Result result = Parser.parse(source);
 
         if (result.hasErrors()) {
@@ -214,40 +219,38 @@ public class MeteorStarscript {
         return Compiler.compile(result);
     }
 
-    public static Section runSection(Script script, StringBuilder sb) {
-        try {
-            return ss.run(script, sb);
-        }
-        catch (StarscriptError error) {
-            printChatError(error);
-            return null;
-        }
-    }
-    public static String run(Script script, StringBuilder sb) {
-        Section section = runSection(script, sb);
-        return section != null ? section.toString() : null;
-    }
-
-    public static Section runSection(Script script) {
-        return runSection(script, new StringBuilder());
-    }
-
     public static String run(Script script) {
         return run(script, new StringBuilder());
     }
 
+    public static String run(Script script, StringBuilder sb) {
+        Section section = runSection(script, sb);
+        return section != null ? new String(section.toString().getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8) : null;
+    }
+
+    public static Section runSection(Script script, StringBuilder sb) {
+        try {
+            return ss.run(script, sb);
+        } catch (StarscriptError error) {
+            printChatError(error);
+            return null;
+        }
+    }
     // Errors
 
     public static void printChatError(int i, Error error) {
         String caller = getCallerName();
 
+        String message = error.message;
+        message = new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8); // Đảm bảo UTF-8
+
         if (caller != null) {
-            if (i != -1) ChatUtils.errorPrefix("Starscript", "%d, %d '%c': %s (from %s)", i, error.character, error.ch, error.message, caller);
-            else ChatUtils.errorPrefix("Starscript", "%d '%c': %s (from %s)", error.character, error.ch, error.message, caller);
+            if (i != -1) ChatUtils.errorPrefix("Starscript", "%d, %d '%c': %s (from %s)", i, error.character, error.ch, message, caller);
+            else ChatUtils.errorPrefix("Starscript", "%d '%c': %s (from %s)", error.character, error.ch, message, caller);
         }
         else {
-            if (i != -1) ChatUtils.errorPrefix("Starscript", "%d, %d '%c': %s", i, error.character, error.ch, error.message);
-            else ChatUtils.errorPrefix("Starscript", "%d '%c': %s", error.character, error.ch, error.message);
+            if (i != -1) ChatUtils.errorPrefix("Starscript", "%d, %d '%c': %s", i, error.character, error.ch, message);
+            else ChatUtils.errorPrefix("Starscript", "%d '%c': %s", error.character, error.ch, message);
         }
     }
 
@@ -257,11 +260,12 @@ public class MeteorStarscript {
 
     public static void printChatError(StarscriptError e) {
         String caller = getCallerName();
+        String message = e.getMessage();
+        message = new String(message.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8); // Đảm bảo UTF-8
 
-        if (caller != null) ChatUtils.errorPrefix("Starscript", "%s (from %s)", e.getMessage(), caller);
-        else ChatUtils.errorPrefix("Starscript", "%s", e.getMessage());
+        if (caller != null) ChatUtils.errorPrefix("Starscript", "%s (from %s)", message, caller);
+        else ChatUtils.errorPrefix("Starscript", "%s", message);
     }
-
     private static String getCallerName() {
         StackTraceElement[] elements = Thread.currentThread().getStackTrace();
         if (elements.length == 0) return null;

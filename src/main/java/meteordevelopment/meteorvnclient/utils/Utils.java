@@ -394,10 +394,14 @@ public class Utils {
     }
 
     public static String nameToTitle(String name) {
+        // Đảm bảo name là UTF-8
+        name = new String(name.getBytes(java.nio.charset.StandardCharsets.UTF_8), java.nio.charset.StandardCharsets.UTF_8);
         return Arrays.stream(name.split("-")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
     }
 
     public static String titleToName(String title) {
+        // Đảm bảo title là UTF-8
+        title = new String(title.getBytes(java.nio.charset.StandardCharsets.UTF_8), java.nio.charset.StandardCharsets.UTF_8);
         return title.replace(" ", "-").toLowerCase(Locale.ROOT);
     }
 

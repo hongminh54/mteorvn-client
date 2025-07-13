@@ -20,12 +20,12 @@ public class Main {
 
         int option = JOptionPane.showOptionDialog(
                 null,
-                "To install Meteor Client you need to put it in your mods folder and run Fabric for latest Minecraft version.",
-                "Meteor Client",
+                "Để sử dụng MeteorVN Client, bạn cần cài đặt Fabric Loader và ném file jar vào thư mục mods của bạn.",
+                "Nhắc nhở",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.ERROR_MESSAGE,
                 null,
-                new String[] { "Open Wiki", "Open Mods Folder" },
+                new String[] { "Xem hướng dẫn", "Mở thư mục mods" },
                 null
         );
 

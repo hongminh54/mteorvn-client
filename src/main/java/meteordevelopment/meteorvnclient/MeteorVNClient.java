@@ -50,6 +50,8 @@ public class MeteorVNClient implements ClientModInitializer {
     public static final String NAME;
     public static final Version VERSION;
     public static final String BUILD_NUMBER;
+    public static final String DEV_BUILD = "v1.0.1";
+    public static final boolean IN_DEVELOPMENT = true;
 
     public static MeteorVNClient INSTANCE;
     public static MeteorAddon ADDON;
@@ -69,7 +71,7 @@ public class MeteorVNClient implements ClientModInitializer {
         if (versionString.contains("-")) versionString = versionString.split("-")[0];
 
         // When building and running through IntelliJ and not Gradle it doesn't replace the version so just use a dummy
-        if (versionString.equals("${version}")) versionString = "0.0.0";
+        if (versionString.equals("${version}")) versionString = "1.0.0";
 
         VERSION = new Version(versionString);
         BUILD_NUMBER = MOD_META.getCustomValue(MeteorVNClient.MOD_ID + ":build_number").getAsString();

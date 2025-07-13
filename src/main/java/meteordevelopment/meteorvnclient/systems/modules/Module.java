@@ -51,13 +51,13 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public boolean favorite = false;
 
     public Module(Category category, String name, String description, String... aliases) {
-        if (name.contains(" ")) MeteorVNClient.LOG.warn("Module '{}' contains invalid characters in its name making it incompatible with Meteor Client commands.", name);
+        if (name.contains(" ")) MeteorVNClient.LOG.warn("Module '{}' contains invalid characters in its name making it incompatible with MeteorVN Client commands.", name);
 
         this.mc = MinecraftClient.getInstance();
         this.category = category;
-        this.name = name;
+        this.name = new String(name.getBytes(java.nio.charset.StandardCharsets.UTF_8), java.nio.charset.StandardCharsets.UTF_8);
         this.title = Utils.nameToTitle(name);
-        this.description = description;
+        this.description = new String(description.getBytes(java.nio.charset.StandardCharsets.UTF_8), java.nio.charset.StandardCharsets.UTF_8);
         this.aliases = aliases;
         this.color = Color.fromHsv(Utils.random(0.0, 360.0), 0.35, 1);
 
@@ -109,7 +109,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public void sendToggledMsg() {
         if (Config.get().chatFeedback.get() && chatFeedback) {
             ChatUtils.forceNextPrefixClass(getClass());
-            ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Toggled (highlight)%s(default) %s(default).", title, isActive() ? Formatting.GREEN + "on" : Formatting.RED + "off");
+            ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Đã chuyển đổi (highlight)%s(default) %s(default).", title, isActive() ? Formatting.GREEN + "on" : Formatting.RED + "off");
         }
     }
 
