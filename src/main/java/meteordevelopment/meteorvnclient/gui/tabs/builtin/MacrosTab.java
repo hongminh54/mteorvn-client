@@ -18,6 +18,7 @@ import meteordevelopment.meteorvnclient.settings.Settings;
 import meteordevelopment.meteorvnclient.systems.macros.Macro;
 import meteordevelopment.meteorvnclient.systems.macros.Macros;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.client.gui.screen.Screen;
 
 import static meteordevelopment.meteorvnclient.MeteorVNClient.mc;
@@ -49,7 +50,7 @@ public class MacrosTab extends Tab {
 
             add(theme.horizontalSeparator()).expandX();
 
-            WButton create = add(theme.button("Create")).expandX().widget();
+            WButton create = add(theme.button(TranslationUtils.translate("gui.create", "Create"))).expandX().widget();
             create.action = () -> mc.setScreen(new EditMacroScreen(theme, null, this::reload));
         }
 

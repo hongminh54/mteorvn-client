@@ -25,6 +25,7 @@ import meteordevelopment.meteorvnclient.utils.entity.SortPriority;
 import meteordevelopment.meteorvnclient.utils.entity.TargetUtils;
 import meteordevelopment.meteorvnclient.utils.misc.HorizontalDirection;
 import meteordevelopment.meteorvnclient.utils.misc.MBlockPos;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.player.*;
 import meteordevelopment.meteorvnclient.utils.render.NametagUtils;
 import meteordevelopment.meteorvnclient.utils.render.RenderUtils;
@@ -509,9 +510,9 @@ public class HighwayBuilder extends Module {
         mc.options.useKey.setPressed(false);
 
         if (displayInfo) {
-            info("Distance: (highlight)%.0f", PlayerUtils.distanceTo(start));
-            info("Blocks broken: (highlight)%d", blocksBroken);
-            info("Blocks placed: (highlight)%d", blocksPlaced);
+            info(TranslationUtils.translateMessage("highway_distance", "Khoảng cách: (highlight)%.0f"), PlayerUtils.distanceTo(start));
+            info(TranslationUtils.translateMessage("highway_blocks_broken", "Khối đã phá: (highlight)%d"), blocksBroken);
+            info(TranslationUtils.translateMessage("highway_blocks_placed", "Khối đã đặt: (highlight)%d"), blocksPlaced);
         }
     }
 
@@ -1209,7 +1210,7 @@ public class HighwayBuilder extends Module {
                 }
 
                 if (emptySlots == 0) {
-                    b.error("No empty slots.");
+                    b.error(TranslationUtils.translateMessage("no_empty_slots", "Không có slot trống."));
                     return;
                 }
 
@@ -1294,7 +1295,7 @@ public class HighwayBuilder extends Module {
                     // Mine ender chest
                     int slot = findAndMoveBestToolToHotbar(b, blockState, true);
                     if (slot == -1) {
-                        b.error("Cannot find pickaxe without silk touch to mine ender chests.");
+                        b.error(TranslationUtils.translateMessage("no_pickaxe", "Không thể tìm thấy pickaxe không có silk touch để đào ender chest."));
                         return;
                     }
 
@@ -1430,7 +1431,7 @@ public class HighwayBuilder extends Module {
 
                     if (restockOccurred) {
                         b.setState(ThrowOutTrash, Forward);
-                    } else b.error("Unable to perform restock for '" + b.restockTask.item() + "'.");
+                    } else b.error(TranslationUtils.translateMessage("restock_failed", "Không thể thực hiện restock cho '%s'."), b.restockTask.item());
 
                     return;
                 }

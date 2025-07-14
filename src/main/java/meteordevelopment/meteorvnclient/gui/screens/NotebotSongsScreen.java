@@ -14,6 +14,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorvnclient.systems.modules.Modules;
 import meteordevelopment.meteorvnclient.systems.modules.misc.Notebot;
 import meteordevelopment.meteorvnclient.utils.Utils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.notebot.decoder.SongDecoders;
 import org.apache.commons.io.FilenameUtils;
 
@@ -31,17 +32,17 @@ public class NotebotSongsScreen extends WindowScreen {
     private WTable table;
 
     public NotebotSongsScreen(GuiTheme theme) {
-        super(theme, "Notebot Songs");
+        super(theme, TranslationUtils.translate("gui.notebot_songs", "Notebot Songs"));
     }
 
     @Override
     public void initWidgets() {
         // Random Song
-        WButton randomSong = add(theme.button("Random Song")).minWidth(400).expandX().widget();
+        WButton randomSong = add(theme.button(TranslationUtils.translate("gui.random_song", "Random Song"))).minWidth(400).expandX().widget();
         randomSong.action = notebot::playRandomSong;
 
         // Filter
-        filter = add(theme.textBox("", "Search for the songs...")).minWidth(400).expandX().widget();
+        filter = add(theme.textBox("", TranslationUtils.translate("gui.search_songs", "Search for the songs..."))).minWidth(400).expandX().widget();
         filter.setFocused(true);
         filter.action = () -> {
             filterText = filter.get().trim();
@@ -69,12 +70,12 @@ public class NotebotSongsScreen extends WindowScreen {
                 }
             });
         } catch (IOException e) {
-            table.add(theme.label("Missing meteorvn-client/notebot folder.")).expandCellX();
+            table.add(theme.label(TranslationUtils.translate("gui.missing_notebot_folder", "Missing meteorvn-client/notebot folder."))).expandCellX();
             table.row();
         }
 
         if (noSongsFound.get()) {
-            table.add(theme.label("No songs found.")).expandCellX().center();
+            table.add(theme.label(TranslationUtils.translate("gui.no_songs_found", "No songs found."))).expandCellX().center();
         }
     }
 
@@ -83,9 +84,9 @@ public class NotebotSongsScreen extends WindowScreen {
         table.row();
 
         table.add(theme.label(FilenameUtils.getBaseName(path.getFileName().toString()))).expandCellX();
-        WButton load = table.add(theme.button("Load")).right().widget();
+        WButton load = table.add(theme.button(TranslationUtils.translate("gui.load", "Load"))).right().widget();
         load.action = () -> notebot.loadSong(path.toFile());
-        WButton preview = table.add(theme.button("Preview")).right().widget();
+        WButton preview = table.add(theme.button(TranslationUtils.translate("gui.preview", "Preview"))).right().widget();
         preview.action = () -> notebot.previewSong(path.toFile());
 
         table.row();

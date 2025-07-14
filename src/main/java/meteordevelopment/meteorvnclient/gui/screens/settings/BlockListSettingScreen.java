@@ -11,6 +11,7 @@ import meteordevelopment.meteorvnclient.mixin.IdentifierAccessor;
 import meteordevelopment.meteorvnclient.settings.BlockListSetting;
 import meteordevelopment.meteorvnclient.settings.Setting;
 import meteordevelopment.meteorvnclient.utils.misc.Names;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registries;
@@ -23,7 +24,7 @@ public class BlockListSettingScreen extends RegistryListSettingScreen<Block> {
     private static final Identifier ID = Identifier.of("minecraft", "");
 
     public BlockListSettingScreen(GuiTheme theme, Setting<List<Block>> setting) {
-        super(theme, "Select Blocks", setting, setting.get(), Registries.BLOCK);
+        super(theme, TranslationUtils.translate("gui.screen.select_blocks", "Select Blocks"), setting, setting.get(), Registries.BLOCK);
     }
 
     @Override

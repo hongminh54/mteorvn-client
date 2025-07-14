@@ -13,6 +13,7 @@ import com.mojang.serialization.DataResult;
 import meteordevelopment.meteorvnclient.commands.Command;
 import meteordevelopment.meteorvnclient.commands.arguments.ComponentMapArgumentType;
 import meteordevelopment.meteorvnclient.utils.misc.text.MeteorClickEvent;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.DataCommandObject;
 import net.minecraft.command.EntityDataObject;
@@ -46,7 +47,7 @@ public class NbtCommand extends Command {
         ))
         .withHoverEvent(new HoverEvent(
             HoverEvent.Action.SHOW_TEXT,
-            Text.literal("Copy the NBT data to your clipboard.")
+            Text.literal(TranslationUtils.translate("command.nbt.copy_tooltip", "Copy the NBT data to your clipboard."))
         )));
 
     public NbtCommand() {

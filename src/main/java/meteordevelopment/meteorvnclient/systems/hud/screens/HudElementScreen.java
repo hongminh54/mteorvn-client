@@ -18,6 +18,7 @@ import meteordevelopment.meteorvnclient.settings.EnumSetting;
 import meteordevelopment.meteorvnclient.settings.SettingGroup;
 import meteordevelopment.meteorvnclient.settings.Settings;
 import meteordevelopment.meteorvnclient.systems.hud.HudElement;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.systems.hud.XAnchor;
 import meteordevelopment.meteorvnclient.systems.hud.YAnchor;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
@@ -104,7 +105,7 @@ public class HudElementScreen extends WindowScreen {
         WHorizontalList bottomList = add(theme.horizontalList()).expandX().widget();
 
         //   Active
-        bottomList.add(theme.label("Active:"));
+        bottomList.add(theme.label(TranslationUtils.translate("gui.hud.active", "Active:")));
         WCheckbox active = bottomList.add(theme.checkbox(element.isActive())).widget();
         active.action = () -> {
             if (element.isActive() != active.checked) element.toggle();

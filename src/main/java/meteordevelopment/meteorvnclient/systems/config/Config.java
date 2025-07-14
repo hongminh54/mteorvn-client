@@ -20,16 +20,28 @@ import net.minecraft.nbt.NbtString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static meteordevelopment.meteorvnclient.MeteorVNClient.mc;
 
 public class Config extends System<Config> {
     public final Settings settings = new Settings();
 
+    private final SettingGroup sgGeneral = settings.createGroup("General");
     private final SettingGroup sgVisual = settings.createGroup("Visual");
     private final SettingGroup sgModules = settings.createGroup("Modules");
     private final SettingGroup sgChat = settings.createGroup("Chat");
     private final SettingGroup sgMisc = settings.createGroup("Misc");
+
+    // General
+
+    public final Setting<String> language = sgGeneral.add(new StringSetting.Builder()
+        .name("language")
+        .description("Language for the client interface.")
+        .defaultValue("en_us")
+        .onChanged(this::onLanguageChanged)
+        .build()
+    );
 
     // Visual
 
@@ -198,5 +210,17 @@ public class Config extends System<Config> {
         List<String> list = new ArrayList<>();
         for (NbtElement item : tag.getList(key, 8)) list.add(item.asString());
         return list;
+    }
+
+    private void onLanguageChanged(String newLanguage) {
+        // Force reload language resources when language setting changes
+        if (mc != null && mc.getLanguageManager() != null) {
+            try {
+                mc.getLanguageManager().setLanguage(newLanguage);
+                mc.reloadResources();
+            } catch (Exception e) {
+                MeteorVNClient.LOG.error("Failed to change language to: " + newLanguage, e);
+            }
+        }
     }
 }

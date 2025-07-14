@@ -15,6 +15,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WCheckbox;
 import meteordevelopment.meteorvnclient.systems.hud.Hud;
 import meteordevelopment.meteorvnclient.systems.hud.screens.HudEditorScreen;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -53,18 +54,18 @@ public class HudTab extends Tab {
 
             add(theme.horizontalSeparator()).expandX();
 
-            WButton openEditor = add(theme.button("Edit")).expandX().widget();
+            WButton openEditor = add(theme.button(TranslationUtils.translate("gui.hud.edit", "Edit"))).expandX().widget();
             openEditor.action = () -> mc.setScreen(new HudEditorScreen(theme));
 
             WHorizontalList buttons = add(theme.horizontalList()).expandX().widget();
-            buttons.add(theme.button("Clear")).expandX().widget().action = hud::clear;
-            buttons.add(theme.button("Reset to default elements")).expandX().widget().action = hud::resetToDefaultElements;
+            buttons.add(theme.button(TranslationUtils.translate("gui.hud.clear", "Clear"))).expandX().widget().action = hud::clear;
+            buttons.add(theme.button(TranslationUtils.translate("gui.hud.reset_to_default", "Reset to default elements"))).expandX().widget().action = hud::resetToDefaultElements;
 
             add(theme.horizontalSeparator()).expandX();
 
             WHorizontalList bottom = add(theme.horizontalList()).expandX().widget();
 
-            bottom.add(theme.label("Active: "));
+            bottom.add(theme.label(TranslationUtils.translate("gui.hud.active", "Active: ")));
             WCheckbox active = bottom.add(theme.checkbox(hud.active)).expandCellX().widget();
             active.action = () -> hud.active = active.checked;
 

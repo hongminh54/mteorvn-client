@@ -19,6 +19,7 @@ import meteordevelopment.meteorvnclient.systems.modules.Category;
 import meteordevelopment.meteorvnclient.systems.modules.Module;
 import meteordevelopment.meteorvnclient.systems.modules.Modules;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.item.Items;
 
 import java.util.ArrayList;
@@ -41,8 +42,8 @@ public class ModulesScreen extends TabScreen {
 
         // Help
         WVerticalList help = add(theme.verticalList()).pad(4).bottom().widget();
-        help.add(theme.label("Left click - Toggle module"));
-        help.add(theme.label("Right click - Open module settings"));
+        help.add(theme.label(TranslationUtils.translate("gui.help.left_click_toggle", "Left click - Toggle module")));
+        help.add(theme.label(TranslationUtils.translate("gui.help.right_click_settings", "Right click - Open module settings")));
     }
 
     @Override

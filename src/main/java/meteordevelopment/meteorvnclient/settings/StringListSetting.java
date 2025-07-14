@@ -12,6 +12,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.containers.WTable;
 import meteordevelopment.meteorvnclient.gui.widgets.input.WTextBox;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WMinus;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -101,7 +102,7 @@ public class StringListSetting extends Setting<List<String>>{
             table.row();
         }
 
-        WButton add = table.add(theme.button("Add")).expandX().widget();
+        WButton add = table.add(theme.button(TranslationUtils.translate("gui.add", "Add"))).expandX().widget();
         add.action = () -> {
             strings.add("");
             setting.set(strings);

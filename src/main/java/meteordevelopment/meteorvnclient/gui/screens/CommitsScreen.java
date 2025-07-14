@@ -11,6 +11,7 @@ import meteordevelopment.meteorvnclient.gui.GuiTheme;
 import meteordevelopment.meteorvnclient.gui.WindowScreen;
 import meteordevelopment.meteorvnclient.gui.widgets.containers.WHorizontalList;
 import meteordevelopment.meteorvnclient.gui.widgets.containers.WTable;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.network.Http;
 import meteordevelopment.meteorvnclient.utils.network.MeteorExecutor;
 import net.minecraft.util.Util;
@@ -76,21 +77,21 @@ public class CommitsScreen extends WindowScreen {
 
     private void populateError() {
         String errorMessage = switch (statusCode) {
-            case Http.BAD_REQUEST -> "Connection dropped";
-            case Http.UNAUTHORIZED -> "Unauthorized";
-            case Http.FORBIDDEN -> "Rate-limited";
-            case Http.NOT_FOUND -> "Invalid commit hash";
-            default -> "Error Code: " + statusCode;
+            case Http.BAD_REQUEST -> TranslationUtils.translate("gui.connection_dropped", "Connection dropped");
+            case Http.UNAUTHORIZED -> TranslationUtils.translate("gui.unauthorized", "Unauthorized");
+            case Http.FORBIDDEN -> TranslationUtils.translate("gui.rate_limited", "Rate-limited");
+            case Http.NOT_FOUND -> TranslationUtils.translate("gui.invalid_commit_hash", "Invalid commit hash");
+            default -> TranslationUtils.translate("gui.error_code", "Error Code: ") + statusCode;
         };
 
-        populateHeader("There was an error fetching commits: " + errorMessage);
+        populateHeader(TranslationUtils.translate("gui.error_fetching_commits", "There was an error fetching commits: ") + errorMessage);
 
         if (statusCode == Http.UNAUTHORIZED) {
             add(theme.horizontalSeparator()).padVertical(theme.scale(8)).expandX();
             WHorizontalList l = add(theme.horizontalList()).expandX().widget();
 
-            l.add(theme.label("Consider using an authentication token: ")).expandX();
-            l.add(theme.button("Authorization Guide")).widget().action = () -> {
+            l.add(theme.label(TranslationUtils.translate("gui.consider_auth_token", "Consider using an authentication token: "))).expandX();
+            l.add(theme.button(TranslationUtils.translate("gui.authorization_guide", "Authorization Guide"))).widget().action = () -> {
                 Util.getOperatingSystem().open("https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens");
             };
         }
@@ -100,8 +101,8 @@ public class CommitsScreen extends WindowScreen {
 
     private void populateCommits() {
         // Top
-        String text = "There are %d new commits";
-        if (commits.length == 1) text = "There is %d new commit";
+        String text = TranslationUtils.translate("gui.new_commits_plural", "There are %d new commits");
+        if (commits.length == 1) text = TranslationUtils.translate("gui.new_commits_singular", "There is %d new commit");
         populateHeader(String.format(text, commits.length));
 
         // Commits

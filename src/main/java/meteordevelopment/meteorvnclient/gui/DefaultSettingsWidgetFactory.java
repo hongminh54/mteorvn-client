@@ -23,6 +23,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.pressable.WPlus;
 import meteordevelopment.meteorvnclient.renderer.Fonts;
 import meteordevelopment.meteorvnclient.settings.*;
 import meteordevelopment.meteorvnclient.utils.Utils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.render.color.SettingColor;
 import net.minecraft.client.resource.language.I18n;
 import org.apache.commons.lang3.StringUtils;
@@ -470,7 +471,7 @@ public class DefaultSettingsWidgetFactory extends SettingsWidgetFactory {
             ((WHorizontalList) c2).spacing *= 2;
         }
 
-        WButton button = c2.add(theme.button("Select")).expandCellX().widget();
+        WButton button = c2.add(theme.button(TranslationUtils.translate("gui.select", "Select"))).expandCellX().widget();
         button.action = action;
 
         if (addCount) c2.add(new WSelectedCountLabel(setting).color(theme.textSecondaryColor()));

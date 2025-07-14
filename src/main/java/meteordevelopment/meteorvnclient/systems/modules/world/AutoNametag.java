@@ -15,6 +15,7 @@ import meteordevelopment.meteorvnclient.utils.entity.SortPriority;
 import meteordevelopment.meteorvnclient.utils.entity.TargetUtils;
 import meteordevelopment.meteorvnclient.utils.player.FindItemResult;
 import meteordevelopment.meteorvnclient.utils.player.InvUtils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.player.PlayerUtils;
 import meteordevelopment.meteorvnclient.utils.player.Rotations;
 import meteordevelopment.orbit.EventHandler;
@@ -85,7 +86,7 @@ public class AutoNametag extends Module {
         FindItemResult findNametag = InvUtils.findInHotbar(Items.NAME_TAG);
 
         if (!findNametag.found()) {
-            error("No Nametag in Hotbar");
+            error(TranslationUtils.translateMessage("no_nametag", "No Nametag in Hotbar"));
             toggle();
             return;
         }

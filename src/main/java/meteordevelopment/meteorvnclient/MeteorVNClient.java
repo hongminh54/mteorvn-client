@@ -26,6 +26,7 @@ import meteordevelopment.meteorvnclient.utils.ReflectInit;
 import meteordevelopment.meteorvnclient.utils.Utils;
 import meteordevelopment.meteorvnclient.utils.misc.Version;
 import meteordevelopment.meteorvnclient.utils.misc.input.KeyAction;
+import meteordevelopment.meteorvnclient.systems.config.Config;
 import meteordevelopment.meteorvnclient.utils.misc.input.KeyBinds;
 import meteordevelopment.meteorvnclient.utils.network.OnlinePlayers;
 import meteordevelopment.orbit.EventBus;
@@ -43,6 +44,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.lang.invoke.MethodHandles;
+import java.util.Locale;
 
 public class MeteorVNClient implements ClientModInitializer {
     public static final String MOD_ID = "meteorvn-client";
@@ -132,6 +134,9 @@ public class MeteorVNClient implements ClientModInitializer {
         // Load configs
         Systems.load();
 
+        // Auto-detect and set Vietnamese language if system locale is Vietnamese
+        autoDetectLanguage();
+
         // Post init
         ReflectInit.init(PostInit.class);
 
@@ -192,5 +197,27 @@ public class MeteorVNClient implements ClientModInitializer {
 
     public static Identifier identifier(String path) {
         return Identifier.of(MeteorVNClient.MOD_ID, path);
+    }
+
+    private void autoDetectLanguage() {
+        try {
+            // Check system locale
+            Locale systemLocale = Locale.getDefault();
+            String language = systemLocale.getLanguage();
+            String country = systemLocale.getCountry();
+
+            // If system is Vietnamese, set language to vi_vn
+            if ("vi".equals(language) || "VN".equals(country)) {
+                Config.get().language.set("vi_vn");
+                LOG.info("Auto-detected Vietnamese locale, setting language to vi_vn");
+            }
+            // For testing purposes, also set to vi_vn by default
+            else {
+                Config.get().language.set("vi_vn");
+                LOG.info("Setting default language to vi_vn");
+            }
+        } catch (Exception e) {
+            LOG.error("Failed to auto-detect language", e);
+        }
     }
 }

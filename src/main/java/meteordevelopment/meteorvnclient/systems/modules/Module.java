@@ -15,6 +15,7 @@ import meteordevelopment.meteorvnclient.systems.config.Config;
 import meteordevelopment.meteorvnclient.utils.Utils;
 import meteordevelopment.meteorvnclient.utils.misc.ISerializable;
 import meteordevelopment.meteorvnclient.utils.misc.Keybind;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.player.ChatUtils;
 import meteordevelopment.meteorvnclient.utils.render.color.Color;
 import net.minecraft.client.MinecraftClient;
@@ -57,7 +58,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
         this.category = category;
         this.name = new String(name.getBytes(java.nio.charset.StandardCharsets.UTF_8), java.nio.charset.StandardCharsets.UTF_8);
         this.title = Utils.nameToTitle(name);
-        this.description = new String(description.getBytes(java.nio.charset.StandardCharsets.UTF_8), java.nio.charset.StandardCharsets.UTF_8);
+        this.description = TranslationUtils.translateModule(name, description);
         this.aliases = aliases;
         this.color = Color.fromHsv(Utils.random(0.0, 360.0), 0.35, 1);
 
@@ -109,7 +110,7 @@ public abstract class Module implements ISerializable<Module>, Comparable<Module
     public void sendToggledMsg() {
         if (Config.get().chatFeedback.get() && chatFeedback) {
             ChatUtils.forceNextPrefixClass(getClass());
-            ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "Đã chuyển đổi (highlight)%s(default) %s(default).", title, isActive() ? Formatting.GREEN + "on" : Formatting.RED + "off");
+            ChatUtils.sendMsg(this.hashCode(), Formatting.GRAY, "%s(default) %s(default)(highlight).", title, isActive() ? Formatting.GREEN + TranslationUtils.translateMessage("enabled", "Bật") : Formatting.RED + TranslationUtils.translateMessage("disabled", "Tắt"));
         }
     }
 

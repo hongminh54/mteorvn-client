@@ -16,6 +16,7 @@ import meteordevelopment.meteorvnclient.mixin.TextHandlerAccessor;
 import meteordevelopment.meteorvnclient.settings.*;
 import meteordevelopment.meteorvnclient.systems.modules.Categories;
 import meteordevelopment.meteorvnclient.systems.modules.Module;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.player.FindItemResult;
 import meteordevelopment.meteorvnclient.utils.player.InvUtils;
 import meteordevelopment.orbit.EventHandler;
@@ -130,9 +131,9 @@ public class BookBot extends Module {
     public WWidget getWidget(GuiTheme theme) {
         WHorizontalList list = theme.horizontalList();
 
-        WButton selectFile = list.add(theme.button("Select File")).widget();
+        WButton selectFile = list.add(theme.button(TranslationUtils.translate("gui.select_file", "Select File"))).widget();
 
-        WLabel fileName = list.add(theme.label((file != null && file.exists()) ? file.getName() : "No file selected.")).widget();
+        WLabel fileName = list.add(theme.label((file != null && file.exists()) ? file.getName() : TranslationUtils.translate("gui.no_file_selected", "No file selected."))).widget();
 
         selectFile.action = () -> {
             String path = TinyFileDialogs.tinyfd_openFileDialog(

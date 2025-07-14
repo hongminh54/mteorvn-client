@@ -5,6 +5,7 @@
 
 package meteordevelopment.meteorvnclient.settings;
 
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.ArrayList;
@@ -21,7 +22,12 @@ public class EnumSetting<T extends Enum<?>> extends Setting<T> {
 
         values = (T[]) defaultValue.getDeclaringClass().getEnumConstants();
         suggestions = new ArrayList<>(values.length);
-        for (T value : values) suggestions.add(value.toString());
+        for (T value : values) {
+            String enumClassName = defaultValue.getDeclaringClass().getSimpleName().toLowerCase();
+            String enumValueName = value.toString().toLowerCase();
+            String translatedValue = TranslationUtils.translateEnum(enumClassName, enumValueName, value.toString());
+            suggestions.add(translatedValue);
+        }
     }
 
     @Override

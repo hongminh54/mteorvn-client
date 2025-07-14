@@ -13,6 +13,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.pressable.WMinus;
 import meteordevelopment.meteorvnclient.systems.accounts.Account;
 import meteordevelopment.meteorvnclient.systems.accounts.Accounts;
 import meteordevelopment.meteorvnclient.systems.accounts.TokenAccount;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.network.MeteorExecutor;
 import meteordevelopment.meteorvnclient.utils.render.color.Color;
 
@@ -46,12 +47,12 @@ public abstract class WAccount extends WHorizontalList {
 
         // Info
         if (account instanceof TokenAccount) {
-            WButton info = add(theme.button("Info")).widget();
+            WButton info = add(theme.button(TranslationUtils.translate("gui.info", "Info"))).widget();
             info.action = () -> mc.setScreen(new AccountInfoScreen(theme, account));
         }
 
         // Login
-        WButton login = add(theme.button("Login")).widget();
+        WButton login = add(theme.button(TranslationUtils.translate("gui.login", "Login"))).widget();
         login.action = () -> {
             login.minWidth = login.width;
             login.set("...");
@@ -67,7 +68,7 @@ public abstract class WAccount extends WHorizontalList {
                 }
 
                 login.minWidth = 0;
-                login.set("Login");
+                login.set(TranslationUtils.translate("gui.login", "Login"));
                 screen.locked = false;
             });
         };

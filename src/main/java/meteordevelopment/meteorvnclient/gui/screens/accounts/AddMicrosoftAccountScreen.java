@@ -7,12 +7,13 @@ package meteordevelopment.meteorvnclient.gui.screens.accounts;
 
 import meteordevelopment.meteorvnclient.gui.GuiTheme;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.systems.accounts.MicrosoftLogin;
 import meteordevelopment.meteorvnclient.systems.accounts.types.MicrosoftAccount;
 
 public class AddMicrosoftAccountScreen extends AddAccountScreen {
     public AddMicrosoftAccountScreen(GuiTheme theme, AccountsScreen parent) {
-        super(theme, "Add Microsoft Account", parent);
+        super(theme, TranslationUtils.translate("gui.add_microsoft_account", "Add Microsoft Account"), parent);
     }
 
     @Override
@@ -27,9 +28,9 @@ public class AddMicrosoftAccountScreen extends AddAccountScreen {
             close();
         });
 
-        add(theme.label("Please select the account to log into in your browser."));
+        add(theme.label(TranslationUtils.translate("gui.select_account_browser", "Please select the account to log into in your browser.")));
 
-        WButton cancel = add(theme.button("Cancel")).expandX().widget();
+        WButton cancel = add(theme.button(TranslationUtils.translate("gui.cancel", "Cancel"))).expandX().widget();
         cancel.action = () -> {
             MicrosoftLogin.stopServer();
             close();

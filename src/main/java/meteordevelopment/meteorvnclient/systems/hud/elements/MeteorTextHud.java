@@ -7,6 +7,7 @@ package meteordevelopment.meteorvnclient.systems.hud.elements;
 
 import meteordevelopment.meteorvnclient.systems.hud.Hud;
 import meteordevelopment.meteorvnclient.systems.hud.HudElementInfo;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 
 public class MeteorTextHud {
     public static final HudElementInfo<TextHud> INFO = new HudElementInfo<>(Hud.GROUP, "text", "Displays arbitrary text with Starscript.", MeteorTextHud::create);
@@ -34,26 +35,26 @@ public class MeteorTextHud {
 
     static {
         addPreset("Empty", null);
-        FPS = addPreset("FPS", "FPS: #1{fps}", 0);
-        TPS = addPreset("TPS", "TPS: #1{round(server.tps, 1)}");
-        PING = addPreset("Ping", "Ping: #1{ping}");
-        SPEED = addPreset("Speed", "Speed: #1{round(player.speed, 1)}", 0);
-        GAME_MODE = addPreset("Game mode", "Game mode: #1{player.gamemode}", 0);
-        DURABILITY = addPreset("Durability", "Durability: #1{player.hand_or_offhand.durability}");
-        POSITION = addPreset("Position", "Pos: #1{floor(camera.pos.x)}, {floor(camera.pos.y)}, {floor(camera.pos.z)}", 0);
+        FPS = addPreset("FPS", TranslationUtils.translateHud("fps", "FPS: #1{fps}"), 0);
+        TPS = addPreset("TPS", TranslationUtils.translateHud("tps", "TPS: #1{round(server.tps, 1)}"));
+        PING = addPreset("Ping", TranslationUtils.translateHud("ping", "Ping: #1{ping}"));
+        SPEED = addPreset("Speed", TranslationUtils.translateHud("speed", "Tốc độ: #1{round(player.speed, 1)}"), 0);
+        GAME_MODE = addPreset("Game mode", TranslationUtils.translateHud("game_mode", "Chế độ chơi: #1{player.gamemode}"), 0);
+        DURABILITY = addPreset("Durability", TranslationUtils.translateHud("durability", "Độ bền: #1{player.hand_or_offhand.durability}"));
+        POSITION = addPreset("Position", TranslationUtils.translateHud("position", "Vị trí: #1{floor(camera.pos.x)}, {floor(camera.pos.y)}, {floor(camera.pos.z)}"), 0);
         OPPOSITE_POSITION = addPreset("Opposite Position", "{player.opposite_dimension != \"End\" ? player.opposite_dimension + \":\" : \"\"} #1{player.opposite_dimension != \"End\" ? \"\" + floor(camera.opposite_dim_pos.x) + \", \" + floor(camera.opposite_dim_pos.y) + \", \" + floor(camera.opposite_dim_pos.z) : \"\"}", 0);
-        LOOKING_AT = addPreset("Looking at", "Looking at: #1{crosshair_target.value}", 0);
-        LOOKING_AT_WITH_POSITION = addPreset("Looking at with position", "Looking at: #1{crosshair_target.value} {crosshair_target.type != \"miss\" ? \"(\" + \"\" + floor(crosshair_target.value.pos.x) + \", \" + floor(crosshair_target.value.pos.y) + \", \" + floor(crosshair_target.value.pos.z) + \")\" : \"\"}", 0);
-        BREAKING_PROGRESS = addPreset("Breaking progress", "Breaking progress: #1{round(player.breaking_progress * 100)}%", 0);
-        SERVER = addPreset("Server", "Server: #1{server}");
-        BIOME = addPreset("Biome", "Biome: #1{player.biome}", 0);
-        WORLD_TIME = addPreset("World time", "Time: #1{server.time}");
-        REAL_TIME = addPreset("Real time", "Time: #1{time}");
-        ROTATION = addPreset("Rotation", "{camera.direction} #1({round(camera.yaw, 1)}, {round(camera.pitch, 1)})", 0);
-        MODULE_ENABLED = addPreset("Module enabled", "Kill Aura: {meteor.is_module_active(\"kill-aura\") ? #2 \"ON\" : #3 \"OFF\"}", 0);
-        MODULE_ENABLED_WITH_INFO = addPreset("Module enabled with info", "Kill Aura: {meteor.is_module_active(\"kill-aura\") ? #2 \"ON\" : #3 \"OFF\"} #1{meteor.get_module_info(\"kill-aura\")}", 0);
-        WATERMARK = addPreset("Watermark", "{meteor.name} #1{meteor.version}");
-        BARITONE = addPreset("Baritone", "Baritone: #1{baritone.process_name}");
+        LOOKING_AT = addPreset("Looking at", TranslationUtils.translateHud("looking_at", "Đang nhìn: #1{crosshair_target.value}"), 0);
+        LOOKING_AT_WITH_POSITION = addPreset("Looking at with position", TranslationUtils.translateHud("looking_at_with_position", "Đang nhìn: #1{crosshair_target.value} {crosshair_target.type != \"miss\" ? \"(\" + \"\" + floor(crosshair_target.value.pos.x) + \", \" + floor(crosshair_target.value.pos.y) + \", \" + floor(crosshair_target.value.pos.z) + \")\" : \"\"}"), 0);
+        BREAKING_PROGRESS = addPreset("Breaking progress", TranslationUtils.translateHud("breaking_progress", "Tiến độ phá: #1{round(player.breaking_progress * 100)}%"), 0);
+        SERVER = addPreset("Server", TranslationUtils.translateHud("server", "Server: #1{server}"));
+        BIOME = addPreset("Biome", TranslationUtils.translateHud("biome", "Quần xã: #1{player.biome}"), 0);
+        WORLD_TIME = addPreset("World time", TranslationUtils.translateHud("world_time", "Thời gian: #1{server.time}"));
+        REAL_TIME = addPreset("Real time", TranslationUtils.translateHud("real_time", "Thời gian: #1{time}"));
+        ROTATION = addPreset("Rotation", TranslationUtils.translateHud("rotation", "{camera.direction} #1({round(camera.yaw, 1)}, {round(camera.pitch, 1)})"), 0);
+        MODULE_ENABLED = addPreset("Module enabled", "Kill Aura: {meteor.is_module_active(\"kill-aura\") ? #2 \"BẬT\" : #3 \"TẮT\"}", 0);
+        MODULE_ENABLED_WITH_INFO = addPreset("Module enabled with info", "Kill Aura: {meteor.is_module_active(\"kill-aura\") ? #2 \"BẬT\" : #3 \"TẮT\"} #1{meteor.get_module_info(\"kill-aura\")}", 0);
+        WATERMARK = addPreset("Watermark", TranslationUtils.translateHud("watermark", "{meteor.name} #1{meteor.version}"));
+        BARITONE = addPreset("Baritone", TranslationUtils.translateHud("baritone", "Baritone: #1{baritone.process_name}"));
     }
 
     private static TextHud create() {

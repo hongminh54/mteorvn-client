@@ -18,6 +18,7 @@ import meteordevelopment.meteorvnclient.systems.modules.Modules;
 import meteordevelopment.meteorvnclient.systems.modules.render.BetterTooltips;
 import meteordevelopment.meteorvnclient.systems.modules.world.Timer;
 import meteordevelopment.meteorvnclient.utils.misc.Names;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.player.EChestMemory;
 import meteordevelopment.meteorvnclient.utils.render.PeekScreen;
 import meteordevelopment.meteorvnclient.utils.render.color.Color;
@@ -406,7 +407,74 @@ public class Utils {
     }
 
     public static String getKeyName(int key) {
-        return switch (key) {
+        String keyId = switch (key) {
+            case GLFW_KEY_UNKNOWN -> "unknown";
+            case GLFW_KEY_ESCAPE -> "esc";
+            case GLFW_KEY_GRAVE_ACCENT -> "grave_accent";
+            case GLFW_KEY_WORLD_1 -> "world_1";
+            case GLFW_KEY_WORLD_2 -> "world_2";
+            case GLFW_KEY_PRINT_SCREEN -> "print_screen";
+            case GLFW_KEY_PAUSE -> "pause";
+            case GLFW_KEY_INSERT -> "insert";
+            case GLFW_KEY_DELETE -> "delete";
+            case GLFW_KEY_HOME -> "home";
+            case GLFW_KEY_PAGE_UP -> "page_up";
+            case GLFW_KEY_PAGE_DOWN -> "page_down";
+            case GLFW_KEY_END -> "end";
+            case GLFW_KEY_TAB -> "tab";
+            case GLFW_KEY_LEFT_CONTROL -> "left_control";
+            case GLFW_KEY_RIGHT_CONTROL -> "right_control";
+            case GLFW_KEY_LEFT_ALT -> "left_alt";
+            case GLFW_KEY_RIGHT_ALT -> "right_alt";
+            case GLFW_KEY_LEFT_SHIFT -> "left_shift";
+            case GLFW_KEY_RIGHT_SHIFT -> "right_shift";
+            case GLFW_KEY_UP -> "arrow_up";
+            case GLFW_KEY_DOWN -> "arrow_down";
+            case GLFW_KEY_LEFT -> "arrow_left";
+            case GLFW_KEY_RIGHT -> "arrow_right";
+            case GLFW_KEY_APOSTROPHE -> "apostrophe";
+            case GLFW_KEY_BACKSPACE -> "backspace";
+            case GLFW_KEY_CAPS_LOCK -> "caps_lock";
+            case GLFW_KEY_MENU -> "menu";
+            case GLFW_KEY_LEFT_SUPER -> "left_super";
+            case GLFW_KEY_RIGHT_SUPER -> "right_super";
+            case GLFW_KEY_ENTER -> "enter";
+            case GLFW_KEY_KP_ENTER -> "numpad_enter";
+            case GLFW_KEY_NUM_LOCK -> "num_lock";
+            case GLFW_KEY_SPACE -> "space";
+            case GLFW_KEY_F1 -> "f1";
+            case GLFW_KEY_F2 -> "f2";
+            case GLFW_KEY_F3 -> "f3";
+            case GLFW_KEY_F4 -> "f4";
+            case GLFW_KEY_F5 -> "f5";
+            case GLFW_KEY_F6 -> "f6";
+            case GLFW_KEY_F7 -> "f7";
+            case GLFW_KEY_F8 -> "f8";
+            case GLFW_KEY_F9 -> "f9";
+            case GLFW_KEY_F10 -> "f10";
+            case GLFW_KEY_F11 -> "f11";
+            case GLFW_KEY_F12 -> "f12";
+            case GLFW_KEY_F13 -> "f13";
+            case GLFW_KEY_F14 -> "f14";
+            case GLFW_KEY_F15 -> "f15";
+            case GLFW_KEY_F16 -> "f16";
+            case GLFW_KEY_F17 -> "f17";
+            case GLFW_KEY_F18 -> "f18";
+            case GLFW_KEY_F19 -> "f19";
+            case GLFW_KEY_F20 -> "f20";
+            case GLFW_KEY_F21 -> "f21";
+            case GLFW_KEY_F22 -> "f22";
+            case GLFW_KEY_F23 -> "f23";
+            case GLFW_KEY_F24 -> "f24";
+            case GLFW_KEY_F25 -> "f25";
+            default -> {
+                String keyName = glfwGetKeyName(key, 0);
+                yield keyName == null ? "unknown" : keyName.toLowerCase().replace(" ", "_");
+            }
+        };
+
+        // Use translation with fallback to original format
+        String fallback = switch (key) {
             case GLFW_KEY_UNKNOWN -> "Unknown";
             case GLFW_KEY_ESCAPE -> "Esc";
             case GLFW_KEY_GRAVE_ACCENT -> "Grave Accent";
@@ -441,45 +509,22 @@ public class Utils {
             case GLFW_KEY_KP_ENTER -> "Numpad Enter";
             case GLFW_KEY_NUM_LOCK -> "Num Lock";
             case GLFW_KEY_SPACE -> "Space";
-            case GLFW_KEY_F1 -> "F1";
-            case GLFW_KEY_F2 -> "F2";
-            case GLFW_KEY_F3 -> "F3";
-            case GLFW_KEY_F4 -> "F4";
-            case GLFW_KEY_F5 -> "F5";
-            case GLFW_KEY_F6 -> "F6";
-            case GLFW_KEY_F7 -> "F7";
-            case GLFW_KEY_F8 -> "F8";
-            case GLFW_KEY_F9 -> "F9";
-            case GLFW_KEY_F10 -> "F10";
-            case GLFW_KEY_F11 -> "F11";
-            case GLFW_KEY_F12 -> "F12";
-            case GLFW_KEY_F13 -> "F13";
-            case GLFW_KEY_F14 -> "F14";
-            case GLFW_KEY_F15 -> "F15";
-            case GLFW_KEY_F16 -> "F16";
-            case GLFW_KEY_F17 -> "F17";
-            case GLFW_KEY_F18 -> "F18";
-            case GLFW_KEY_F19 -> "F19";
-            case GLFW_KEY_F20 -> "F20";
-            case GLFW_KEY_F21 -> "F21";
-            case GLFW_KEY_F22 -> "F22";
-            case GLFW_KEY_F23 -> "F23";
-            case GLFW_KEY_F24 -> "F24";
-            case GLFW_KEY_F25 -> "F25";
             default -> {
                 String keyName = glfwGetKeyName(key, 0);
                 yield keyName == null ? "Unknown" : StringUtils.capitalize(keyName);
             }
         };
+
+        return TranslationUtils.translate("key." + keyId, fallback);
     }
 
     public static String getButtonName(int button) {
         return switch (button) {
-            case -1 -> "Unknown";
-            case 0 -> "Mouse Left";
-            case 1 -> "Mouse Right";
-            case 2 -> "Mouse Middle";
-            default -> "Mouse " + button;
+            case -1 -> TranslationUtils.translate("mouse.unknown", "Unknown");
+            case 0 -> TranslationUtils.translate("mouse.left", "Mouse Left");
+            case 1 -> TranslationUtils.translate("mouse.right", "Mouse Right");
+            case 2 -> TranslationUtils.translate("mouse.middle", "Mouse Middle");
+            default -> TranslationUtils.translate("mouse.button", "Mouse " + button).replace("{0}", String.valueOf(button));
         };
     }
 

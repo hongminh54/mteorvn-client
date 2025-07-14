@@ -23,6 +23,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.pressable.WFavorite;
 import meteordevelopment.meteorvnclient.systems.modules.Module;
 import meteordevelopment.meteorvnclient.systems.modules.Modules;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.nbt.NbtCompound;
 
@@ -63,12 +64,12 @@ public class ModuleScreen extends WindowScreen {
         }
 
         // Bind
-        WSection section = add(theme.section("Bind", true)).expandX().widget();
+        WSection section = add(theme.section(TranslationUtils.translate("gui.bind", "Bind"), true)).expandX().widget();
 
         // Keybind
         WHorizontalList bind = section.add(theme.horizontalList()).expandX().widget();
 
-        bind.add(theme.label("Bind: "));
+        bind.add(theme.label(TranslationUtils.translate("gui.bind_label", "Bind: ")));
         keybind = bind.add(theme.keybind(module.keybind)).expandX().widget();
         keybind.actionOnSet = () -> Modules.get().setModuleToBind(module);
 
@@ -78,14 +79,14 @@ public class ModuleScreen extends WindowScreen {
         // Toggle on bind release
         WHorizontalList tobr = section.add(theme.horizontalList()).widget();
 
-        tobr.add(theme.label("Toggle on bind release: "));
+        tobr.add(theme.label(TranslationUtils.translate("gui.toggle_on_bind_release", "Toggle on bind release: ")));
         WCheckbox tobrC = tobr.add(theme.checkbox(module.toggleOnBindRelease)).widget();
         tobrC.action = () -> module.toggleOnBindRelease = tobrC.checked;
 
         // Chat feedback
         WHorizontalList cf = section.add(theme.horizontalList()).widget();
 
-        cf.add(theme.label("Chat Feedback: "));
+        cf.add(theme.label(TranslationUtils.translate("gui.chat_feedback", "Chat Feedback: ")));
         WCheckbox cfC = cf.add(theme.checkbox(module.chatFeedback)).widget();
         cfC.action = () -> module.chatFeedback = cfC.checked;
 
@@ -95,7 +96,7 @@ public class ModuleScreen extends WindowScreen {
         WHorizontalList bottom = add(theme.horizontalList()).expandX().widget();
 
         // Active
-        bottom.add(theme.label("Active: "));
+        bottom.add(theme.label(TranslationUtils.translate("gui.active", "Active: ")));
         active = bottom.add(theme.checkbox(module.isActive())).expandCellX().widget();
         active.action = () -> {
             if (module.isActive() != active.checked) module.toggle();

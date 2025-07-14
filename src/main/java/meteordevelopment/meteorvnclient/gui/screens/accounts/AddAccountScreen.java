@@ -7,6 +7,7 @@ package meteordevelopment.meteorvnclient.gui.screens.accounts;
 
 import meteordevelopment.meteorvnclient.gui.GuiTheme;
 import meteordevelopment.meteorvnclient.gui.WindowScreen;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
 
 public abstract class AddAccountScreen extends WindowScreen {
@@ -31,18 +32,19 @@ public abstract class AddAccountScreen extends WindowScreen {
             }
         }
 
-        else if (!add.getText().equals("Add")) {
-            add.set("Add");
+        else if (!add.getText().equals(TranslationUtils.translate("gui.add", "Add"))) {
+            add.set(TranslationUtils.translate("gui.add", "Add"));
         }
     }
 
     private String getNext(WButton add) {
+        String addText = TranslationUtils.translate("gui.add", "Add");
         return switch (add.getText()) {
             case "Add", "oo0" -> "ooo";
             case "ooo" -> "0oo";
             case "0oo" -> "o0o";
             case "o0o" -> "oo0";
-            default -> "Add";
+            default -> addText;
         };
     }
 }

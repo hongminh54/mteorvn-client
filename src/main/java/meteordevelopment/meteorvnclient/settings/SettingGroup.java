@@ -6,6 +6,7 @@
 package meteordevelopment.meteorvnclient.settings;
 
 import meteordevelopment.meteorvnclient.utils.misc.ISerializable;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -17,12 +18,14 @@ import java.util.List;
 
 public class SettingGroup implements ISerializable<SettingGroup>, Iterable<Setting<?>> {
     public final String name;
+    public final String title;
     public boolean sectionExpanded;
 
     final List<Setting<?>> settings = new ArrayList<>(1);
 
     SettingGroup(String name, boolean sectionExpanded) {
         this.name = name;
+        this.title = TranslationUtils.translateGroup(name, name);
         this.sectionExpanded = sectionExpanded;
     }
 

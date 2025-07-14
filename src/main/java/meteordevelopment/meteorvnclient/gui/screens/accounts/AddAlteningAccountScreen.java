@@ -9,6 +9,7 @@ import meteordevelopment.meteorvnclient.gui.GuiTheme;
 import meteordevelopment.meteorvnclient.gui.widgets.containers.WTable;
 import meteordevelopment.meteorvnclient.gui.widgets.input.WTextBox;
 import meteordevelopment.meteorvnclient.systems.accounts.types.TheAlteningAccount;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 
 public class AddAlteningAccountScreen extends AddAccountScreen {
     public AddAlteningAccountScreen(GuiTheme theme, AccountsScreen parent) {
@@ -26,7 +27,7 @@ public class AddAlteningAccountScreen extends AddAccountScreen {
         t.row();
 
         // Add
-        add = t.add(theme.button("Add")).expandX().widget();
+        add = t.add(theme.button(TranslationUtils.translate("gui.add", "Add"))).expandX().widget();
         add.action = () -> {
             if (!token.get().isEmpty()) {
                 AccountsScreen.addAccount(this, parent, new TheAlteningAccount(token.get()));

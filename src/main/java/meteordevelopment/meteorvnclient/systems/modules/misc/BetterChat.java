@@ -24,6 +24,7 @@ import meteordevelopment.meteorvnclient.systems.modules.Module;
 import meteordevelopment.meteorvnclient.utils.Utils;
 import meteordevelopment.meteorvnclient.utils.misc.text.MeteorClickEvent;
 import meteordevelopment.meteorvnclient.utils.misc.text.TextVisitor;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.player.ChatUtils;
 import meteordevelopment.meteorvnclient.utils.render.color.Color;
 import meteordevelopment.orbit.EventHandler;
@@ -305,7 +306,7 @@ public class BetterChat extends Module {
         message = getPrefix() + message + getSuffix();
 
         if (coordsProtection.get() && containsCoordinates(message)) {
-            MutableText warningMessage = Text.literal("It looks like there are coordinates in your message! ");
+            MutableText warningMessage = Text.literal(TranslationUtils.translateMessage("coords_warning", "Có vẻ như có tọa độ trong tin nhắn của bạn! "));
 
             MutableText sendButton = getSendButton(message);
             warningMessage.append(sendButton);
@@ -380,7 +381,7 @@ public class BetterChat extends Module {
     public void removeLine(int index) {
         if (index >= lines.size()) {
             if (antiSpam.get()) {
-                error("Issue detected with the anti-spam system! Likely a compatibility issue with another mod. Disabling anti-spam to protect chat integrity.");
+                error(TranslationUtils.translateMessage("antispam_error", "Phát hiện vấn đề với hệ thống anti-spam! Có thể xung đột với mod khác. Tắt anti-spam để bảo vệ tính toàn vẹn chat."));
                 antiSpam.set(false);
             }
 
@@ -517,7 +518,7 @@ public class BetterChat extends Module {
                 filterRegexList.add(Pattern.compile(regexFilters.get().get(i)));
             } catch (PatternSyntaxException e) {
                 String removed = regexFilters.get().remove(i);
-                error("Removing Invalid regex: %s", removed);
+                error(TranslationUtils.translateMessage("invalid_regex", "Xóa regex không hợp lệ: %s"), removed);
             }
         }
     }
@@ -547,10 +548,10 @@ public class BetterChat extends Module {
     }
 
     private MutableText getSendButton(String message) {
-        MutableText sendButton = Text.literal("[SEND ANYWAY]");
+        MutableText sendButton = Text.literal(TranslationUtils.translateMessage("send_anyway", "[GỬI DÙ SAO]"));
         MutableText hintBaseText = Text.literal("");
 
-        MutableText hintMsg = Text.literal("Send your message to the global chat even if there are coordinates:");
+        MutableText hintMsg = Text.literal(TranslationUtils.translateMessage("send_coords_hint", "Gửi tin nhắn của bạn đến chat toàn cầu ngay cả khi có tọa độ:"));
         hintMsg.setStyle(hintBaseText.getStyle().withFormatting(Formatting.GRAY));
         hintBaseText.append(hintMsg);
 

@@ -19,6 +19,7 @@ import meteordevelopment.meteorvnclient.renderer.Fonts;
 import meteordevelopment.meteorvnclient.renderer.text.FontFamily;
 import meteordevelopment.meteorvnclient.renderer.text.FontInfo;
 import meteordevelopment.meteorvnclient.settings.FontFaceSetting;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class FontFaceSettingScreen extends WindowScreen {
     private String filterText = "";
 
     public FontFaceSettingScreen(GuiTheme theme, FontFaceSetting setting) {
-        super(theme, "Select Font");
+        super(theme, TranslationUtils.translate("gui.screen.select_font", "Select Font"));
 
         this.setting = setting;
     }
@@ -77,7 +78,7 @@ public class FontFaceSettingScreen extends WindowScreen {
 
             WDropdown<FontInfo.Type> dropdown = table.add(theme.dropdown(FontInfo.Type.Regular)).right().widget();
 
-            WButton select = table.add(theme.button("Select")).expandCellX().right().widget();
+            WButton select = table.add(theme.button(TranslationUtils.translate("gui.select", "Select"))).expandCellX().right().widget();
             select.action = () -> {
                 setting.set(fontFamily.get(dropdown.get()));
                 close();

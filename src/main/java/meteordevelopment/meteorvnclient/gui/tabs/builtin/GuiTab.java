@@ -14,6 +14,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.containers.WTable;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorvnclient.gui.widgets.input.WDropdown;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.nbt.NbtCompound;
 
@@ -45,7 +46,7 @@ public class GuiTab extends Tab {
         public void initWidgets() {
             WTable table = add(theme.table()).expandX().widget();
 
-            table.add(theme.label("Theme:"));
+            table.add(theme.label(TranslationUtils.translate("gui.theme", "Theme:")));
             WDropdown<String> themeW = table.add(theme.dropdown(GuiThemes.getNames(), GuiThemes.get().name)).widget();
             themeW.action = () -> {
                 GuiThemes.select(themeW.get());
@@ -54,7 +55,7 @@ public class GuiTab extends Tab {
                 tab.openScreen(GuiThemes.get());
             };
 
-            WButton reset = add(theme.button("Reset GUI Layout")).widget();
+            WButton reset = add(theme.button(TranslationUtils.translate("gui.reset_gui_layout", "Reset GUI Layout"))).widget();
             reset.action = theme::clearWindowConfigs;
 
             add(theme.settings(theme.settings)).expandX();

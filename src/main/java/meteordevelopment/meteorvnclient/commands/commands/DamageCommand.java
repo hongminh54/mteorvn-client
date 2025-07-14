@@ -12,13 +12,14 @@ import meteordevelopment.meteorvnclient.commands.Command;
 import meteordevelopment.meteorvnclient.systems.modules.Modules;
 import meteordevelopment.meteorvnclient.systems.modules.movement.NoFall;
 import meteordevelopment.meteorvnclient.systems.modules.player.AntiHunger;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 public class DamageCommand extends Command {
-    private final static SimpleCommandExceptionType INVULNERABLE = new SimpleCommandExceptionType(Text.literal("You are invulnerable."));
+    private final static SimpleCommandExceptionType INVULNERABLE = new SimpleCommandExceptionType(Text.literal(TranslationUtils.translate("command.damage.invulnerable", "You are invulnerable.")));
 
     public DamageCommand() {
         super("damage", "Damages self", "dmg");

@@ -5,6 +5,7 @@ import meteordevelopment.meteorvnclient.gui.WindowScreen;
 import meteordevelopment.meteorvnclient.gui.widgets.containers.WContainer;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorvnclient.settings.Settings;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 
 public abstract class EditSystemScreen<T> extends WindowScreen {
     private WContainer settingsContainer;
@@ -27,7 +28,7 @@ public abstract class EditSystemScreen<T> extends WindowScreen {
 
         add(theme.horizontalSeparator()).expandX();
 
-        WButton done = add(theme.button(isNew ? "Create" : "Save")).expandX().widget();
+        WButton done = add(theme.button(isNew ? TranslationUtils.translate("gui.create", "Create") : TranslationUtils.translate("gui.save", "Save"))).expandX().widget();
         done.action = () -> {
             if (save()) close();
         };

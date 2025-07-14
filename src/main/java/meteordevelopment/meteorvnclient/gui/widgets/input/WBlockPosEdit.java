@@ -12,6 +12,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.containers.WHorizontalList;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorvnclient.systems.modules.Modules;
 import meteordevelopment.meteorvnclient.systems.modules.render.marker.Marker;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.hit.HitResult;
@@ -42,9 +43,9 @@ public class WBlockPosEdit extends WHorizontalList {
         addTextBox();
 
         if (canUpdate()) {
-            WButton click = add(theme.button("Click")).expandX().widget();
+            WButton click = add(theme.button(TranslationUtils.translate("gui.click", "Click"))).expandX().widget();
             click.action = () -> {
-                String sb = "Click!\nRight click to pick a new position.\nLeft click to cancel.";
+                String sb = TranslationUtils.translate("gui.click_instruction", "Click!\nRight click to pick a new position.\nLeft click to cancel.");
                 Modules.get().get(Marker.class).info(sb);
 
                 clicking = true;
@@ -53,7 +54,7 @@ public class WBlockPosEdit extends WHorizontalList {
                 mc.setScreen(null);
             };
 
-            WButton here = add(theme.button("Set Here")).expandX().widget();
+            WButton here = add(theme.button(TranslationUtils.translate("gui.set_here", "Set Here"))).expandX().widget();
             here.action = () -> {
                 lastValue = value;
                 set(new BlockPos(mc.player.getBlockPos()));

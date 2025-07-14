@@ -17,6 +17,7 @@ import meteordevelopment.meteorvnclient.systems.modules.Module;
 import meteordevelopment.meteorvnclient.utils.Utils;
 import meteordevelopment.meteorvnclient.utils.misc.ByteCountDataOutput;
 import meteordevelopment.meteorvnclient.utils.misc.Keybind;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.player.EChestMemory;
 import meteordevelopment.meteorvnclient.utils.render.color.Color;
 import meteordevelopment.meteorvnclient.utils.tooltip.*;
@@ -320,7 +321,7 @@ public class BetterTooltips extends Module {
 
                 event.appendEnd(Text.literal(count).formatted(Formatting.GRAY));
             } catch (Exception e) {
-                event.appendEnd(Text.literal("Error getting bytes.").formatted(Formatting.RED));
+                event.appendEnd(Text.literal(TranslationUtils.translateMessage("error_getting_bytes", "Lỗi khi lấy bytes.")).formatted(Formatting.RED));
             }
         }
 
@@ -340,7 +341,7 @@ public class BetterTooltips extends Module {
         else if (event.itemStack.getItem() == Items.ENDER_CHEST && previewEChest()) {
             event.tooltipData = EChestMemory.isKnown()
                 ? new ContainerTooltipComponent(EChestMemory.ITEMS.toArray(new ItemStack[27]), ECHEST_COLOR)
-                : new TextTooltipComponent(Text.literal("Unknown inventory.").formatted(Formatting.DARK_RED));
+                : new TextTooltipComponent(Text.literal(TranslationUtils.translateMessage("unknown_inventory", "Kho đồ không xác định.")).formatted(Formatting.DARK_RED));
         }
 
         // Map preview

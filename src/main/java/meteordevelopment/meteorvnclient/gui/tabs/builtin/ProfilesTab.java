@@ -18,6 +18,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.pressable.WMinus;
 import meteordevelopment.meteorvnclient.systems.profiles.Profile;
 import meteordevelopment.meteorvnclient.systems.profiles.Profiles;
 import meteordevelopment.meteorvnclient.utils.Utils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
 import net.minecraft.client.gui.screen.Screen;
 
@@ -54,7 +55,7 @@ public class ProfilesTab extends Tab {
             add(theme.horizontalSeparator()).expandX();
 
             // Create
-            WButton create = add(theme.button("Create")).expandX().widget();
+            WButton create = add(theme.button(TranslationUtils.translate("gui.create", "Create"))).expandX().widget();
             create.action = () -> mc.setScreen(new EditProfileScreen(theme, null, this::reload));
         }
 
@@ -65,7 +66,7 @@ public class ProfilesTab extends Tab {
             for (Profile profile : Profiles.get()) {
                 table.add(theme.label(profile.name.get())).expandCellX();
 
-                WButton save = table.add(theme.button("Save")).widget();
+                WButton save = table.add(theme.button(TranslationUtils.translate("gui.save", "Save"))).widget();
                 save.action = profile::save;
 
                 WButton load = table.add(theme.button("Load")).widget();
@@ -116,7 +117,7 @@ public class ProfilesTab extends Tab {
 
             add(theme.horizontalSeparator()).expandX();
 
-            WButton save = add(theme.button(isNew ? "Create" : "Save")).expandX().widget();
+            WButton save = add(theme.button(isNew ? TranslationUtils.translate("gui.create", "Create") : TranslationUtils.translate("gui.save", "Save"))).expandX().widget();
             save.action = () -> {
                 if (profile.name.get().isEmpty()) return;
 

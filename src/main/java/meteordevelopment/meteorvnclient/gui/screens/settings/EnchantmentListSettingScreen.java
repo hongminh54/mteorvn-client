@@ -9,6 +9,7 @@ import meteordevelopment.meteorvnclient.gui.GuiTheme;
 import meteordevelopment.meteorvnclient.gui.widgets.WWidget;
 import meteordevelopment.meteorvnclient.settings.Setting;
 import meteordevelopment.meteorvnclient.utils.misc.Names;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -17,7 +18,7 @@ import java.util.Set;
 
 public class EnchantmentListSettingScreen extends DynamicRegistryListSettingScreen<Enchantment> {
     public EnchantmentListSettingScreen(GuiTheme theme, Setting<Set<RegistryKey<Enchantment>>> setting) {
-        super(theme, "Select Enchantments", setting, setting.get(), RegistryKeys.ENCHANTMENT);
+        super(theme, TranslationUtils.translate("gui.screen.select_enchantments", "Select Enchantments"), setting, setting.get(), RegistryKeys.ENCHANTMENT);
     }
 
     @Override

@@ -16,6 +16,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.input.WIntEdit;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WCheckbox;
 import meteordevelopment.meteorvnclient.settings.Setting;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.render.color.Color;
 import meteordevelopment.meteorvnclient.utils.render.color.SettingColor;
 import net.minecraft.util.math.MathHelper;
@@ -117,22 +118,22 @@ public class ColorSettingScreen extends WindowScreen {
         // RGBA
         WTable rgbaTable = add(theme.table()).expandX().widget();
 
-        rgbaTable.add(theme.label("R:"));
+        rgbaTable.add(theme.label(TranslationUtils.translate("gui.color.r", "R:")));
         rItb = rgbaTable.add(theme.intEdit(setting.get().r, 0, 255, 0, 255, false)).expandX().widget();
         rItb.action = this::rgbaChanged;
         rgbaTable.row();
 
-        rgbaTable.add(theme.label("G:"));
+        rgbaTable.add(theme.label(TranslationUtils.translate("gui.color.g", "G:")));
         gItb = rgbaTable.add(theme.intEdit(setting.get().g, 0, 255, 0, 255, false)).expandX().widget();
         gItb.action = this::rgbaChanged;
         rgbaTable.row();
 
-        rgbaTable.add(theme.label("B:"));
+        rgbaTable.add(theme.label(TranslationUtils.translate("gui.color.b", "B:")));
         bItb = rgbaTable.add(theme.intEdit(setting.get().b, 0, 255, 0, 255, false)).expandX().widget();
         bItb.action = this::rgbaChanged;
         rgbaTable.row();
 
-        rgbaTable.add(theme.label("A:"));
+        rgbaTable.add(theme.label(TranslationUtils.translate("gui.color.a", "A:")));
         aItb = rgbaTable.add(theme.intEdit(setting.get().a, 0, 255, 0, 255, false)).expandX().widget();
         aItb.action = this::rgbaChanged;
 
@@ -149,10 +150,10 @@ public class ColorSettingScreen extends WindowScreen {
         // Bottom
         WHorizontalList bottomList = add(theme.horizontalList()).expandX().widget();
 
-        WButton backButton = bottomList.add(theme.button("Back")).expandX().widget();
+        WButton backButton = bottomList.add(theme.button(TranslationUtils.translate("gui.back", "Back"))).expandX().widget();
         backButton.action = this::close;
 
-        WButton resetButton = bottomList.add(theme.button(GuiRenderer.RESET)).widget();
+        WButton resetButton = bottomList.add(theme.button(TranslationUtils.translate("gui.reset", "Reset"))).widget();
         resetButton.action = () -> {
             setting.reset();
             setFromSetting();

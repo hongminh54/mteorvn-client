@@ -21,6 +21,7 @@ import meteordevelopment.meteorvnclient.renderer.text.TextRenderer;
 import meteordevelopment.meteorvnclient.settings.*;
 import meteordevelopment.meteorvnclient.systems.modules.Categories;
 import meteordevelopment.meteorvnclient.systems.modules.Module;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.notebot.NotebotUtils;
 import meteordevelopment.meteorvnclient.utils.notebot.decoder.SongDecoder;
 import meteordevelopment.meteorvnclient.utils.notebot.decoder.SongDecoders;
@@ -561,13 +562,13 @@ public class Notebot extends Module {
         WTable table = theme.table();
 
         // Open Song GUI
-        WButton openSongGUI = table.add(theme.button("Open Song GUI")).expandX().minWidth(100).widget();
+        WButton openSongGUI = table.add(theme.button(TranslationUtils.translate("gui.open_song_gui", "Open Song GUI"))).expandX().minWidth(100).widget();
         openSongGUI.action = () -> mc.setScreen(theme.notebotSongs());
 
         table.row();
 
         // Align Center
-        WButton alignCenter = table.add(theme.button("Align Center")).expandX().minWidth(100).widget();
+        WButton alignCenter = table.add(theme.button(TranslationUtils.translate("gui.align_center", "Align Center"))).expandX().minWidth(100).widget();
         alignCenter.action = () -> {
             if (mc.player == null) return;
             Vec3d pos = Vec3d.ofBottomCenter(mc.player.getBlockPos());
@@ -708,16 +709,16 @@ public class Notebot extends Module {
      */
     public boolean loadFileToMap(File file, Runnable callback) {
         if (!file.exists() || !file.isFile()) {
-            error("File not found");
+            error(TranslationUtils.translateMessage("file_not_found", "Không tìm thấy file"));
             return false;
         }
 
         if (!SongDecoders.hasDecoder(file)) {
-            error("File is in wrong format. Decoder not found.");
+            error(TranslationUtils.translateMessage("wrong_format", "File có định dạng sai. Không tìm thấy decoder."));
             return false;
         }
 
-        info("Loading song \"%s\".", FilenameUtils.getBaseName(file.getName()));
+        info(TranslationUtils.translateMessage("loading_song", "Đang tải bài hát \"%s\"."), FilenameUtils.getBaseName(file.getName()));
 
         // Start loading song
         loadingSongFuture = CompletableFuture.supplyAsync(() -> {
@@ -744,13 +745,13 @@ public class Notebot extends Module {
                 long time2 = System.currentTimeMillis();
                 long diff = time2 - time1;
 
-                info("Song '" + FilenameUtils.getBaseName(file.getName()) + "' has been loaded to the memory! Took "+diff+"ms");
+                info(TranslationUtils.translateMessage("song_loaded", "Bài hát '%s' đã được tải vào bộ nhớ! Mất %dms"), FilenameUtils.getBaseName(file.getName()), diff);
                 callback.run();
             } else {
                 if (ex instanceof CancellationException) {
-                    error("Loading song '" + FilenameUtils.getBaseName(file.getName()) + "' was cancelled.");
+                    error(TranslationUtils.translateMessage("song_cancelled", "Việc tải bài hát '%s' đã bị hủy."), FilenameUtils.getBaseName(file.getName()));
                 } else {
-                    error("An error occurred while loading song '" + FilenameUtils.getBaseName(file.getName()) + "'. See the logs for more details");
+                    error(TranslationUtils.translateMessage("song_error", "Đã xảy ra lỗi khi tải bài hát '%s'. Xem logs để biết thêm chi tiết"), FilenameUtils.getBaseName(file.getName()));
                     MeteorVNClient.LOG.error("An error occurred while loading song '{}'", FilenameUtils.getBaseName(file.getName()), ex);
                     onSongEnd();
                 }

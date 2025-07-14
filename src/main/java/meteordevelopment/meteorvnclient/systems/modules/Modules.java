@@ -259,7 +259,7 @@ public class Modules extends System<Modules> {
 
         if (moduleToBind.keybind.canBindTo(isKey, value, modifiers)) {
             moduleToBind.keybind.set(isKey, value, modifiers);
-            moduleToBind.info("Đã liên kết với (highlight)%s(default).", moduleToBind.keybind);
+            moduleToBind.info("Mô-đun đã được thêm vào phím tắt §a%s(default).", moduleToBind.keybind);
         }
         else if (value == GLFW.GLFW_KEY_ESCAPE) {
             moduleToBind.keybind.set(Keybind.none());

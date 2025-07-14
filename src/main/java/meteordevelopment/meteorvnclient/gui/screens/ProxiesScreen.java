@@ -18,6 +18,7 @@ import meteordevelopment.meteorvnclient.settings.Settings;
 import meteordevelopment.meteorvnclient.systems.proxies.Proxies;
 import meteordevelopment.meteorvnclient.systems.proxies.Proxy;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryUtil;
@@ -47,7 +48,7 @@ public class ProxiesScreen extends WindowScreen {
         WHorizontalList l = add(theme.horizontalList()).expandX().widget();
 
         // New
-        WButton newBtn = l.add(theme.button("New")).expandX().widget();
+        WButton newBtn = l.add(theme.button(TranslationUtils.translate("gui.new", "New"))).expandX().widget();
         newBtn.action = () -> mc.setScreen(new EditProxyScreen(theme, null, this::reload));
 
         // Import
@@ -58,7 +59,7 @@ public class ProxiesScreen extends WindowScreen {
         filters.put(txtFilter);
         filters.rewind();
 
-        WButton importBtn = l.add(theme.button("Import")).expandX().widget();
+        WButton importBtn = l.add(theme.button(TranslationUtils.translate("gui.import", "Import"))).expandX().widget();
         importBtn.action = () -> {
             String selectedFile = TinyFileDialogs.tinyfd_openFileDialog("Import Proxies", null, filters, null, false);
             if (selectedFile != null) {

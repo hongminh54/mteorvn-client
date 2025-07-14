@@ -11,6 +11,7 @@ import meteordevelopment.meteorvnclient.gui.widgets.WAccount;
 import meteordevelopment.meteorvnclient.gui.widgets.containers.WContainer;
 import meteordevelopment.meteorvnclient.gui.widgets.containers.WHorizontalList;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.systems.accounts.Account;
 import meteordevelopment.meteorvnclient.systems.accounts.Accounts;
 import meteordevelopment.meteorvnclient.utils.misc.NbtUtils;
@@ -21,7 +22,7 @@ import static meteordevelopment.meteorvnclient.MeteorVNClient.mc;
 
 public class AccountsScreen extends WindowScreen {
     public AccountsScreen(GuiTheme theme) {
-        super(theme, "Accounts");
+        super(theme, TranslationUtils.translate("gui.accounts", "Accounts"));
     }
 
     @Override
@@ -35,9 +36,9 @@ public class AccountsScreen extends WindowScreen {
         // Add account
         WHorizontalList l = add(theme.horizontalList()).expandX().widget();
 
-        addButton(l, "Cracked", () -> mc.setScreen(new AddCrackedAccountScreen(theme, this)));
-        addButton(l, "Altening", () -> mc.setScreen(new AddAlteningAccountScreen(theme, this)));
-        addButton(l, "Microsoft", () -> mc.setScreen(new AddMicrosoftAccountScreen(theme, this)));
+        addButton(l, TranslationUtils.translate("gui.cracked", "Cracked"), () -> mc.setScreen(new AddCrackedAccountScreen(theme, this)));
+        addButton(l, TranslationUtils.translate("gui.altening", "Altening"), () -> mc.setScreen(new AddAlteningAccountScreen(theme, this)));
+        addButton(l, TranslationUtils.translate("gui.microsoft", "Microsoft"), () -> mc.setScreen(new AddMicrosoftAccountScreen(theme, this)));
     }
 
     private void addButton(WContainer c, String text, Runnable action) {

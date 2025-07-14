@@ -10,6 +10,7 @@ import meteordevelopment.meteorvnclient.systems.hud.Hud;
 import meteordevelopment.meteorvnclient.systems.hud.HudElement;
 import meteordevelopment.meteorvnclient.systems.hud.HudElementInfo;
 import meteordevelopment.meteorvnclient.systems.hud.HudRenderer;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.render.color.Color;
 import meteordevelopment.meteorvnclient.utils.render.color.SettingColor;
 import meteordevelopment.meteorvnclient.utils.world.TickRate;
@@ -138,7 +139,7 @@ public class LagNotifierHud extends HudElement {
         double x = this.x + border.get();
         double y = this.y + border.get();
 
-        double x2 = renderer.text("Time since last tick ", x, y, textColor.get(), shadow.get(), getScale());
+        double x2 = renderer.text(TranslationUtils.translateHud("time_since_last_tick", "Thời gian từ tick cuối "), x, y, textColor.get(), shadow.get(), getScale());
         x2 = renderer.text(right, x2, y, rightColor, shadow.get(), getScale());
 
         setSize(x2 - x, renderer.textHeight(shadow.get(), getScale()));

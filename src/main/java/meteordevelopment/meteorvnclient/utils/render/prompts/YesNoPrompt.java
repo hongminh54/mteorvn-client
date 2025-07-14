@@ -8,6 +8,7 @@ package meteordevelopment.meteorvnclient.utils.render.prompts;
 import meteordevelopment.meteorvnclient.gui.GuiTheme;
 import meteordevelopment.meteorvnclient.gui.GuiThemes;
 import meteordevelopment.meteorvnclient.gui.widgets.pressable.WButton;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.client.gui.screen.Screen;
 
 import static meteordevelopment.meteorvnclient.MeteorVNClient.mc;
@@ -40,14 +41,14 @@ public class YesNoPrompt extends Prompt<YesNoPrompt> {
 
     @Override
     protected void initialiseWidgets(PromptScreen screen) {
-        WButton yesButton = screen.list.add(theme.button("Yes")).expandX().widget();
+        WButton yesButton = screen.list.add(theme.button(TranslationUtils.translate("gui.yes", "Yes"))).expandX().widget();
         yesButton.action = () -> {
             dontShowAgain(screen);
             onYes.run();
             screen.close();
         };
 
-        WButton noButton = screen.list.add(theme.button("No")).expandX().widget();
+        WButton noButton = screen.list.add(theme.button(TranslationUtils.translate("gui.no", "No"))).expandX().widget();
         noButton.action = () -> {
             dontShowAgain(screen);
             onNo.run();

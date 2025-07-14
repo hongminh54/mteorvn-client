@@ -9,6 +9,7 @@ import meteordevelopment.meteorvnclient.gui.GuiTheme;
 import meteordevelopment.meteorvnclient.gui.WindowScreen;
 import meteordevelopment.meteorvnclient.gui.widgets.containers.WTable;
 import meteordevelopment.meteorvnclient.gui.widgets.input.WTextBox;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import net.minecraft.client.gui.screen.ingame.BookScreen;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.WrittenBookContentComponent;
@@ -28,7 +29,7 @@ public class EditBookTitleAndAuthorScreen extends WindowScreen {
     private final Hand hand;
 
     public EditBookTitleAndAuthorScreen(GuiTheme theme, ItemStack itemStack, Hand hand) {
-        super(theme, "Edit title & author");
+        super(theme, TranslationUtils.translate("gui.screen.edit_book", "Edit title & author"));
         this.itemStack = itemStack;
         this.hand = hand;
     }
@@ -37,15 +38,15 @@ public class EditBookTitleAndAuthorScreen extends WindowScreen {
     public void initWidgets() {
         WTable t = add(theme.table()).expandX().widget();
 
-        t.add(theme.label("Title"));
+        t.add(theme.label(TranslationUtils.translate("gui.title", "Title")));
         WTextBox title = t.add(theme.textBox(itemStack.get(DataComponentTypes.WRITTEN_BOOK_CONTENT).title().get(mc.shouldFilterText()))).minWidth(220).expandX().widget();
         t.row();
 
-        t.add(theme.label("Author"));
+        t.add(theme.label(TranslationUtils.translate("gui.author", "Author")));
         WTextBox author = t.add(theme.textBox(itemStack.get(DataComponentTypes.WRITTEN_BOOK_CONTENT).author())).minWidth(220).expandX().widget();
         t.row();
 
-        t.add(theme.button("Done")).expandX().widget().action = () -> {
+        t.add(theme.button(TranslationUtils.translate("gui.done", "Done"))).expandX().widget().action = () -> {
             WrittenBookContentComponent component = itemStack.get(DataComponentTypes.WRITTEN_BOOK_CONTENT);
             WrittenBookContentComponent newComponent = new WrittenBookContentComponent(RawFilteredPair.of(title.get()), author.get(), component.generation(), component.pages(), component.resolved());
             itemStack.set(DataComponentTypes.WRITTEN_BOOK_CONTENT, newComponent);

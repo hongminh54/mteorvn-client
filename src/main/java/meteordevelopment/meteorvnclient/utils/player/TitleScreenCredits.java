@@ -16,6 +16,7 @@ import meteordevelopment.meteorvnclient.utils.network.Http;
 import meteordevelopment.meteorvnclient.utils.network.MeteorExecutor;
 import meteordevelopment.meteorvnclient.utils.render.MeteorToast;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.Items;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -40,6 +41,9 @@ import static meteordevelopment.meteorvnclient.MeteorVNClient.mc;
 
 public class TitleScreenCredits {
     private static final List<Credit> credits = new ArrayList<>();
+
+    private static final Identifier BACKGROUND_TEXTURE = MeteorVNClient.identifier("textures/mainscreen/default_background.png");
+    private static final Identifier LOGO_TEXTURE = MeteorVNClient.identifier("textures/mainscreen/meteorvn_logo.png");
 
     private TitleScreenCredits() {
     }
@@ -147,45 +151,105 @@ public class TitleScreenCredits {
     }
 
     private static void renderTitle(DrawContext context, int screenWidth, int screenHeight) {
-        // Vẽ tiêu đề "MeteorVN Client" ở trung tâm trên cùng, tăng kích thước bằng cách vẽ shadow lớn hơn
+        try {
+            // Tính toán kích thước logo responsive dựa trên màn hình
+            float scaleFactor = Math.min(screenWidth / 1920.0f, screenHeight / 1080.0f); // Scale dựa trên 1920x1080
+            scaleFactor = Math.max(0.5f, Math.min(1.5f, scaleFactor)); // Giới hạn scale từ 0.5x đến 1.5x
+
+            int baseLogoWidth = 256; // Kích thước base của logo
+            int baseLogoHeight = 64;
+            int logoWidth = (int) (baseLogoWidth * scaleFactor);
+            int logoHeight = (int) (baseLogoHeight * scaleFactor);
+
+            // Positioning căn chỉnh đẹp hơn
+            int x = (screenWidth - logoWidth) / 2; // Căn giữa ngang
+            int y = (int) (screenHeight * 0.15f); // 15% từ trên xuống thay vì fixed 60px
+
+            // Vẽ shadow cho logo (tạo depth)
+            int shadowOffset = (int) (2 * scaleFactor);
+            context.fill(x + shadowOffset, y + shadowOffset,
+                        x + logoWidth + shadowOffset, y + logoHeight + shadowOffset,
+                        0x40000000); // Shadow đen nhẹ
+
+            // Vẽ logo chính
+            context.drawTexture(RenderLayer::getGuiTextured, LOGO_TEXTURE,
+                x, y, 0, 0, logoWidth, logoHeight, logoWidth, logoHeight);
+
+        } catch (Exception e) {
+            // Fallback về text cũ nếu không load được logo
+            renderFallbackTitle(context, screenWidth, screenHeight);
+        }
+    }
+
+    private static void renderFallbackTitle(DrawContext context, int screenWidth, int screenHeight) {
         String meteorPart = "Meteor";
         String vnPart = "VN";
         String clientPart = " Client";
 
-        // Tính toán vị trí (căn giữa ngang, cách trên 20px)
-        int y = 80; // Khoảng cách từ trên cùng (có thể điều chỉnh)
+        // Tính toán scale cho text dựa trên màn hình
+        float textScale = Math.min(screenWidth / 1920.0f, screenHeight / 1080.0f);
+        textScale = Math.max(0.8f, Math.min(2.0f, textScale));
+
+        int y = (int) (screenHeight * 0.15f); // Cùng vị trí với logo
         int meteorWidth = mc.textRenderer.getWidth(meteorPart);
         int vnWidth = mc.textRenderer.getWidth(vnPart);
         int clientWidth = mc.textRenderer.getWidth(clientPart);
         int totalWidth = meteorWidth + vnWidth + clientWidth;
-        int x = (screenWidth - totalWidth) / 2; // Căn giữa ngang
+        int x = (screenWidth - totalWidth) / 2;
 
-        // Tăng kích thước bằng cách vẽ văn bản với shadow lớn hơn (giả lập kích thước lớn)
-        // Vẽ "Meteor" màu hồng nhạt (0xFFFF69B4)
-        context.drawTextWithShadow(mc.textRenderer, Text.literal(meteorPart), x, y, 0xFFFF69B4);
-        // Vẽ "VN" màu vàng (0xFFFFFF00)
-        context.drawTextWithShadow(mc.textRenderer, Text.literal(vnPart), x + meteorWidth, y, 0xFFFFFF00);
-        // Vẽ " Client" màu trắng (0xFFFFFFFF)
-        context.drawTextWithShadow(mc.textRenderer, Text.literal(clientPart), x + meteorWidth + vnWidth, y, 0xFFFFFFFF);
+        // Vẽ text với shadow đẹp hơn
+        int shadowOffset = 2;
 
-        // Để tăng kích thước thực sự, bạn có thể cần scale hoặc sử dụng một font lớn hơn
-        // Dưới đây là cách giả lập kích thước lớn hơn bằng cách vẽ nhiều lần (tùy chọn, nhưng có thể gây lỗi hiển thị)
-    /*
-    for (int i = 0; i < 2; i++) { // Nhân đôi kích thước (scale 2x)
-        context.drawTextWithShadow(mc.textRenderer, Text.literal(meteorPart), x + i, y + i, 0xFFFF69B4, false);
-        context.drawTextWithShadow(mc.textRenderer, Text.literal(vnPart), x + meteorWidth + i, y + i, 0xFFFFFF00, false);
-        context.drawTextWithShadow(mc.textRenderer, Text.literal(clientPart), x + meteorWidth + vnWidth + i, y + i, 0xFFFFFFFF, false);
-    }
-    */
+        // Shadow
+        context.drawText(mc.textRenderer, Text.literal(meteorPart), x + shadowOffset, y + shadowOffset, 0x80000000, false);
+        context.drawText(mc.textRenderer, Text.literal(vnPart), x + meteorWidth + shadowOffset, y + shadowOffset, 0x80000000, false);
+        context.drawText(mc.textRenderer, Text.literal(clientPart), x + meteorWidth + vnWidth + shadowOffset, y + shadowOffset, 0x80000000, false);
+
+        // Text chính
+        context.drawText(mc.textRenderer, Text.literal(meteorPart), x, y, 0xFFFF69B4, false);
+        context.drawText(mc.textRenderer, Text.literal(vnPart), x + meteorWidth, y, 0xFFFFFF00, false);
+        context.drawText(mc.textRenderer, Text.literal(clientPart), x + meteorWidth + vnWidth, y, 0xFFFFFFFF, false);
     }
 
     private static void renderGradientBackground(DrawContext context, int screenWidth, int screenHeight) {
-        // Màu tím đậm (RGB: 128, 0, 128) và hồng nhạt (RGB: 255, 105, 180)
-        int colorTop = 0xFFFF69B4; // Tím đậm
-        int colorBottom = 0xFF800080; // Hồng nhạt
+        try {
+            // Vẽ background image với scaling thông minh
+            // Tính toán scale để background luôn cover toàn màn hình
+            float bgScale = Math.max(
+                (float) screenWidth / 1920.0f,  // Giả sử background gốc là 1920x1080
+                (float) screenHeight / 1080.0f
+            );
 
-        // Vẽ gradient từ trên xuống dưới trên toàn bộ màn hình
-        context.fillGradient(0, 0, screenWidth, screenHeight, colorTop, colorBottom);
+            int scaledWidth = (int) (1920 * bgScale);
+            int scaledHeight = (int) (1080 * bgScale);
+            int offsetX = (screenWidth - scaledWidth) / 2;
+            int offsetY = (screenHeight - scaledHeight) / 2;
+
+            // Vẽ background image
+            context.drawTexture(RenderLayer::getGuiTextured, BACKGROUND_TEXTURE,
+                offsetX, offsetY, 0, 0, scaledWidth, scaledHeight, scaledWidth, scaledHeight);
+
+            // Thêm overlay gradient tinh tế để tạo depth và contrast cho logo
+            context.fillGradient(0, 0, screenWidth, screenHeight / 3,
+                0x30000000, 0x10000000); // Gradient đen nhẹ ở trên
+            context.fillGradient(0, screenHeight * 2 / 3, screenWidth, screenHeight,
+                0x10000000, 0x30000000); // Gradient đen nhẹ ở dưới
+
+        } catch (Exception e) {
+            // Fallback về gradient cũ nếu không load được texture
+            renderFallbackBackground(context, screenWidth, screenHeight);
+        }
+    }
+
+    private static void renderFallbackBackground(DrawContext context, int screenWidth, int screenHeight) {
+        // Gradient đẹp hơn cho fallback
+        int colorTop = 0xFF2D1B69;    // Tím đậm
+        int colorMid = 0xFF8B5CF6;    // Tím vừa
+        int colorBottom = 0xFFEC4899; // Hồng
+
+        // Vẽ gradient 3 màu
+        context.fillGradient(0, 0, screenWidth, screenHeight / 2, colorTop, colorMid);
+        context.fillGradient(0, screenHeight / 2, screenWidth, screenHeight, colorMid, colorBottom);
     }
 
     public static boolean onClicked(double mouseX, double mouseY) {

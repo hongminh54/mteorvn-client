@@ -18,6 +18,7 @@ import meteordevelopment.meteorvnclient.systems.friends.Friends;
 import meteordevelopment.meteorvnclient.systems.modules.Categories;
 import meteordevelopment.meteorvnclient.systems.modules.Module;
 import meteordevelopment.meteorvnclient.utils.entity.fakeplayer.FakePlayerEntity;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.player.ChatUtils;
 import meteordevelopment.meteorvnclient.utils.player.PlayerUtils;
 import meteordevelopment.orbit.EventHandler;
@@ -208,7 +209,7 @@ public class Notifier extends Module {
         if (!event.entity.getUuid().equals(mc.player.getUuid()) && entities.get().contains(event.entity.getType()) && visualRange.get() && this.event.get() != Event.Despawn) {
             if (event.entity instanceof PlayerEntity) {
                 if ((!visualRangeIgnoreFriends.get() || !Friends.get().isFriend(((PlayerEntity) event.entity))) && (!visualRangeIgnoreFakes.get() || !(event.entity instanceof FakePlayerEntity))) {
-                    ChatUtils.sendMsg(event.entity.getId() + 100, Formatting.GRAY, "(highlight)%s(default) has entered your visual range!", event.entity.getName().getString());
+                    ChatUtils.sendMsg(event.entity.getId() + 100, Formatting.GRAY, TranslationUtils.translateMessage("visual_range_enter", "(highlight)%s(default) đã vào tầm nhìn của bạn!"), event.entity.getName().getString());
 
                     if (visualMakeSound.get())
                         mc.world.playSoundFromEntity(mc.player, mc.player, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.AMBIENT, 3.0F, 1.0F);
@@ -320,7 +321,7 @@ public class Notifier extends Module {
                     double distance = PlayerUtils.distanceTo(entity);
                     if (totemsDistanceCheck.get() && distance > totemsDistance.get()) return;
 
-                    ChatUtils.sendMsg(getChatId(entity), Formatting.GRAY, "(highlight)%s (default)popped (highlight)%d (default)%s.", entity.getName().getString(), pops, pops == 1 ? "totem" : "totems");
+                    ChatUtils.sendMsg(getChatId(entity), Formatting.GRAY, TranslationUtils.translateMessage("totem_pop", "(highlight)%s (default)đã dùng (highlight)%d (default)%s."), entity.getName().getString(), pops, pops == 1 ? "totem" : "totem");
                 }
             }
             default -> {}

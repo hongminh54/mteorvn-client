@@ -16,6 +16,7 @@ import meteordevelopment.meteorvnclient.events.packets.PacketEvent;
 import meteordevelopment.meteorvnclient.events.world.TickEvent;
 import meteordevelopment.meteorvnclient.systems.modules.Modules;
 import meteordevelopment.meteorvnclient.systems.modules.misc.Notebot;
+import meteordevelopment.meteorvnclient.utils.misc.TranslationUtils;
 import meteordevelopment.meteorvnclient.utils.notebot.song.Note;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.block.enums.NoteBlockInstrument;
@@ -111,13 +112,13 @@ public class NotebotCommand extends Command {
             ticks = -1;
             song.clear();
             MeteorVNClient.EVENT_BUS.subscribe(this);
-            info("Recording started");
+            info(TranslationUtils.translate("command.notebot.recording_started", "Recording started"));
             return SINGLE_SUCCESS;
         })));
 
         builder.then(literal("record").then(literal("cancel").executes(ctx -> {
             MeteorVNClient.EVENT_BUS.unsubscribe(this);
-            info("Recording cancelled");
+            info(TranslationUtils.translate("command.notebot.recording_cancelled", "Recording cancelled"));
             return SINGLE_SUCCESS;
         })));
 
