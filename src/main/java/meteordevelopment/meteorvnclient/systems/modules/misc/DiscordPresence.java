@@ -58,7 +58,7 @@ public class DiscordPresence extends Module {
 
     private final Setting<List<String>> line1Strings = sgLine1.add(new StringListSetting.Builder()
         .name("tin-nhan-dong-1")
-        .description("Cac tin nhan duoc su dung cho dong thu nhat.")
+        .description("Các tin nhắn được sử dụng cho dòng 1.")
         .defaultValue("{player}", "{server}")
         .onChanged(strings -> recompileLine1())
         .renderer(StarscriptTextBoxRenderer.class)
@@ -67,7 +67,7 @@ public class DiscordPresence extends Module {
 
     private final Setting<Integer> line1UpdateDelay = sgLine1.add(new IntSetting.Builder()
         .name("toc-do-cap-nhap-dong-1")
-        .description("Toc do cap nhap dong tin nhan tinh bang tick.")
+        .description("Tốc độ cập nhật tin nhắn cho dòng 1 tính bằng tick.")
         .defaultValue(200)
         .min(10)
         .sliderRange(10, 200)
@@ -76,7 +76,7 @@ public class DiscordPresence extends Module {
 
     private final Setting<SelectMode> line1SelectMode = sgLine1.add(new EnumSetting.Builder<SelectMode>()
         .name("che-do-chon-dong-1")
-        .description("Cach chon tin nhan cho dong thu nhat.")
+        .description("Cách chọn tin nhắn cho dòng 1.")
         .defaultValue(SelectMode.Sequential)
         .build()
     );
@@ -85,8 +85,8 @@ public class DiscordPresence extends Module {
 
     private final Setting<List<String>> line2Strings = sgLine2.add(new StringListSetting.Builder()
         .name("Tin-nhan-dong-2")
-        .description("Tin nhan duoc su dung cho dong 2.")
-        .defaultValue("MeteorVN cây nhà lá vườn!", "Được Build Bởi TYBZI (hongminh54)")
+        .description("Các tin nhắn được sử dụng cho dòng 2.")
+        .defaultValue("MeteorVN cây nhà lá vườn!", "Rework by hongminh54")
         .onChanged(strings -> recompileLine2())
         .renderer(StarscriptTextBoxRenderer.class)
         .build()
@@ -94,7 +94,7 @@ public class DiscordPresence extends Module {
 
     private final Setting<Integer> line2UpdateDelay = sgLine2.add(new IntSetting.Builder()
         .name("do-tre-cap-nhat-dong-2")
-        .description("Toc do cap nhap tin nhan dong 2 tinh bang tick.")
+        .description("Tốc độ cập nhật tin nhắn cho dòng 2 tính bằng tick.")
         .defaultValue(60)
         .min(10)
         .sliderRange(10, 200)
@@ -103,7 +103,7 @@ public class DiscordPresence extends Module {
 
     private final Setting<SelectMode> line2SelectMode = sgLine2.add(new EnumSetting.Builder<SelectMode>()
         .name("Che-do-chon-dong-2")
-        .description("Cach chon tin nhan cho dong 2.")
+        .description("Cách chọn tin nhắn cho dòng 2.")
         .defaultValue(SelectMode.Sequential)
         .build()
     );
@@ -127,7 +127,7 @@ public class DiscordPresence extends Module {
     }
 
     public DiscordPresence() {
-        super(Categories.Misc, "discord-presence", "Hien thi trang thai cua ban tren Discord.");
+        super(Categories.Misc, "discord-presence", "Hiển thị trạng thái của bạn trên Discord.");
 
         runInMainMenu = true;
     }
@@ -302,7 +302,7 @@ public class DiscordPresence extends Module {
 
     @Override
     public WWidget getWidget(GuiTheme theme) {
-        WButton help = theme.button("Xem huong dan..");
+        WButton help = theme.button("Xem hướng dẫn..");
         help.action = () -> Util.getOperatingSystem().open("https://github.com/MeteorDevelopment/meteor-client/wiki/Starscript");
 
         return help;
